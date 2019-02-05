@@ -1,0 +1,14 @@
+﻿<Window x:Class="Example.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Example"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button x:Name="Just_a_B" Content="Just a Button" HorizontalAlignment="Left" Margin="98,142,0,0" VerticalAlignment="Top" Width="279" Height="94" Click="Just_a_B_Click"/>
+        <Label x:Name="label1" Content="" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="262" Height="74" FontSize="36"/>
+
+    </Grid>
+</Window>
