@@ -43,7 +43,7 @@ namespace minesweeper
 
 
             /*This loop is getting the user from the number of columns and makes that number 
-            of columns for the grid and adds it*/
+            of columns for the grid and its adding it*/
             for (int i = 0; i < numColumns; i++)
             {
                 ColumnDefinition column = new ColumnDefinition();
