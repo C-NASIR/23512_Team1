@@ -47,7 +47,7 @@ namespace minesweeper
             for (int i = 0; i < numColumns; i++)
             {
                 ColumnDefinition column = new ColumnDefinition();
-                column.Width = new GridLength(50);
+                column.Width = new GridLength(25);
                 dynamicGrid.ColumnDefinitions.Add(column);
             }
 
@@ -56,7 +56,7 @@ namespace minesweeper
             for (int i = 0; i < numrows; i++)
             {
                 RowDefinition row = new RowDefinition();
-                row.Height = new GridLength(40);
+                row.Height = new GridLength(25);
                 dynamicGrid.RowDefinitions.Add(row);
             }
 

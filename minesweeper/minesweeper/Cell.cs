@@ -56,6 +56,7 @@ namespace minesweeper
         public int CellValue
         {
             get { return cellValue; }
+            set { cellValue = value; }
         }
 
         // public property of cell display value
