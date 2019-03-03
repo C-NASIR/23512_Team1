@@ -42,13 +42,14 @@ namespace minesweeper
                     height = yHeight;
                     cells = new Cell[width, height];
 
+                    // instantiate the remaining cells (Joe)
+                    PopulateCells();
+
                     // instantiate the mine cells and add to the array
                     for (int x = 0; x < mines; x++)
                     {
                         CreateMines();
                     }
-
-                    // instantiate the remaining cells
                 }
                 else
                 {
@@ -59,6 +60,18 @@ namespace minesweeper
             else
             {
                 //MessageBox.Show("The number of mines can make up no more than \n one third of the available cells.");
+            }
+        }
+
+        // Instantiate all minefield cells (Joe)
+        private void PopulateCells()
+        {
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    cells[x,y] = new Cell(0,x,y);
+                }
             }
         }
 
@@ -81,9 +94,9 @@ namespace minesweeper
             {
                 x = MineCoordinateGenerator(width);
                 y = MineCoordinateGenerator(height);
-                if (cells[x, y] == null)
+                if (cells[x, y].CellValue != 9)
                 {
-                    cells[x, y] = new Cell(9, x, y);
+                    cells[x, y].CellValue = 9;
                     sameLocation = false;
                 }
                 else
