@@ -29,7 +29,7 @@ namespace minesweeper
             get { return cells; }
         }
 
-        // Grid Constructor
+        // MineField Constructor
         public MineField(int xWidth, int yHeight, int numMines)
         {
             // set the width and height, and create the array

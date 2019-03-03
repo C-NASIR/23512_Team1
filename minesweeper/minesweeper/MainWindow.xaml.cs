@@ -66,6 +66,8 @@ namespace minesweeper
 
         private void SubmitBtn_OnClick(object sender, RoutedEventArgs e)
         {
+            // TODO: instantiate GameLogic class and move code below to game logic
+            
             //Creating variables to hold the numbers
             int numrows, numcolumns;
 
