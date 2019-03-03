@@ -14,3 +14,6 @@ H:\Team Dev\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.exe
 H:\Team Dev\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.pdb
 H:\Team Dev\23512_Team1\minesweeper\minesweeper\obj\Debug\Board.g.cs
 H:\Team Dev\23512_Team1\minesweeper\minesweeper\obj\Debug\Board.baml
+C:\NWTC\23512_Team1\minesweeper\minesweeper\bin\Debug\minesweeper.exe.config
+C:\NWTC\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.exe
+C:\NWTC\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.pdb
