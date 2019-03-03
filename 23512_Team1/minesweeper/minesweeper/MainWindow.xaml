@@ -1,0 +1,15 @@
+﻿<Window x:Class="minesweeper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:minesweeper"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="800">
+    <Grid>
+        <Button x:Name="SubmitBtn" Content="Submit" HorizontalAlignment="Left" Background="GreenYellow" Margin="296,8,0,0" VerticalAlignment="Top" Width="83" Height="25" Click="SubmitBtn_OnClick"/>
+        <TextBox x:Name="RowTbx"  HorizontalAlignment="Left" Height="23" Margin="10,8,0,0" TextWrapping="Wrap" Text="Number of Rows" VerticalAlignment="Top"  Width="120" GotFocus="RowTbx_GotFocus"/>
+        <TextBox x:Name="ColTbx" HorizontalAlignment="Left" Height="23" Margin="153,8,0,0" TextWrapping="Wrap" Text="Number of Columns" VerticalAlignment="Top" Width="120" GotFocus="ColTbx_GotFocus"/>
+
+    </Grid>
+</Window>

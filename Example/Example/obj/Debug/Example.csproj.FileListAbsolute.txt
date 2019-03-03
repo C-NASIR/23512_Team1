@@ -1,0 +1,14 @@
+H:\github\23512_Team1\Example\Example\bin\Debug\Example.exe.config
+H:\github\23512_Team1\Example\Example\bin\Debug\Example.exe
+H:\github\23512_Team1\Example\Example\bin\Debug\Example.pdb
+H:\github\23512_Team1\Example\Example\obj\Debug\Example.csprojResolveAssemblyReference.cache
+H:\github\23512_Team1\Example\Example\obj\Debug\MainWindow.g.cs
+H:\github\23512_Team1\Example\Example\obj\Debug\App.g.cs
+H:\github\23512_Team1\Example\Example\obj\Debug\Example_MarkupCompile.cache
+H:\github\23512_Team1\Example\Example\obj\Debug\Example_MarkupCompile.lref
+H:\github\23512_Team1\Example\Example\obj\Debug\MainWindow.baml
+H:\github\23512_Team1\Example\Example\obj\Debug\Example.g.resources
+H:\github\23512_Team1\Example\Example\obj\Debug\Example.Properties.Resources.resources
+H:\github\23512_Team1\Example\Example\obj\Debug\Example.csproj.GenerateResource.Cache
+H:\github\23512_Team1\Example\Example\obj\Debug\Example.exe
+H:\github\23512_Team1\Example\Example\obj\Debug\Example.pdb
