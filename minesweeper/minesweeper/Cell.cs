@@ -58,7 +58,7 @@ namespace minesweeper
             get { return cellValue; }
             set { cellValue = value; }
         }
-
+        
         // public property of cell display value
         public string CellDisplayValue
         {

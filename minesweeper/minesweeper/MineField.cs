@@ -71,6 +71,7 @@ namespace minesweeper
                 for (int y = 0; y < height; y++)
                 {
                     cells[x,y] = new Cell(0,x,y);
+
                 }
             }
         }

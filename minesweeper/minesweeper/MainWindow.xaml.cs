@@ -21,7 +21,7 @@ namespace minesweeper
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        public const int BOXSIZE = 25;
 
         public MainWindow()
         {
@@ -47,7 +47,7 @@ namespace minesweeper
             for (int i = 0; i < numColumns; i++)
             {
                 ColumnDefinition column = new ColumnDefinition();
-                column.Width = new GridLength(25);
+                column.Width = new GridLength(BOXSIZE);
                 dynamicGrid.ColumnDefinitions.Add(column);
             }
 
@@ -56,8 +56,23 @@ namespace minesweeper
             for (int i = 0; i < numrows; i++)
             {
                 RowDefinition row = new RowDefinition();
-                row.Height = new GridLength(25);
+                row.Height = new GridLength(BOXSIZE);
                 dynamicGrid.RowDefinitions.Add(row);
+            }
+
+            /*This loop populates the grid with buttons in the appropriate
+             * location along with the appropriate name in relation to its
+             * coordinates.*/
+            for (int y = 0; y < numrows; y++)
+            {
+                for (int x = 0; x < numColumns; x++)
+                {
+                    Button btn = new Button();
+                    btn.Name = "btn" + x + y;
+                    Grid.SetColumn(btn, x);
+                    Grid.SetRow(btn, y);
+                    dynamicGrid.Children.Add(btn);
+                }            
             }
 
             //adding the dynamic grid to the mainwindow
@@ -111,5 +126,6 @@ namespace minesweeper
             //clearing the columns textbox placeholder after it gets focus
             ColTbx.Text = "";
         }
+
     }
 }

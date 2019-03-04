@@ -4,19 +4,15 @@
 winexe
 C#
 .cs
-H:\Team Dev\23512_Team1\minesweeper\minesweeper\obj\Debug\
+H:\TeamDev\23512_Team1\minesweeper\minesweeper\obj\Debug\
 minesweeper
 none
 false
 DEBUG;TRACE
-H:\Team Dev\23512_Team1\minesweeper\minesweeper\App.xaml
+H:\TeamDev\23512_Team1\minesweeper\minesweeper\App.xaml
 21340048594
 
-<<<<<<< HEAD
-13166529342
-=======
-12410517372
->>>>>>> a12e74da98e90feb4eb00e3b99cef7adff0ad5d3
+13-13312151
 13738642453
 Board.xaml;MainWindow.xaml;
 
