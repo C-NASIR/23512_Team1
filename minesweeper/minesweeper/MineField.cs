@@ -50,6 +50,8 @@ namespace minesweeper
                     {
                         CreateMines();
                     }
+
+                    //TODO spread logic placement
                 }
                 else
                 {
