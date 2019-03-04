@@ -51,7 +51,17 @@ namespace minesweeper
                         CreateMines();
                     }
 
-                    //TODO spread logic placement
+                    // sets the cell values to the appropriate numbers based on the mine placements
+                    for (int x = 0; x < width; x++)
+                    {
+                        for (int y = 0; y < height; y++)
+                        {
+                            if (cells[x, y].CellValue != 9)
+                            {
+                                cells[x, y].CellValue = CreateValue(cells[x,y]);
+                            }                        
+                        }
+                    }
                 }
                 else
                 {
@@ -73,7 +83,6 @@ namespace minesweeper
                 for (int y = 0; y < height; y++)
                 {
                     cells[x,y] = new Cell(0,x,y);
-
                 }
             }
         }
@@ -107,6 +116,69 @@ namespace minesweeper
                     sameLocation = true;
                 }
             } while (sameLocation);
+        }
+
+        // checks all positions around a cell and returns an int that is the number of mines around the cell
+        private int CreateValue(Cell cell)
+        {
+            int value = 0;
+            if (cell.XLocation - 1 >= 0 && cell.YLocation - 1 >= 0)
+            {
+                if (cells[cell.XLocation - 1, cell.YLocation - 1].CellValue == 9)
+                {
+                    value++;
+                }
+            }
+            if (cell.YLocation - 1 >= 0)
+            {
+                if (cells[cell.XLocation, cell.YLocation - 1].CellValue == 9)
+                {
+                    value++;
+                }
+            }
+            if (cell.XLocation + 1 < width && cell.YLocation - 1 >= 0)
+            {
+                if (cells[cell.XLocation + 1, cell.YLocation - 1].CellValue == 9)
+                {
+                    value++;
+                }
+            }
+            if (cell.XLocation - 1 >= 0)
+            {
+                if (cells[cell.XLocation - 1, cell.YLocation].CellValue == 9)
+                {
+                    value++;
+                }
+            }
+            if (cell.XLocation + 1 < width)
+            {
+                if (cells[cell.XLocation + 1, cell.YLocation].CellValue == 9)
+                {
+                    value++;
+                }
+            }
+            if (cell.XLocation - 1 >= 0 && cell.YLocation + 1 < height)
+            {
+                if (cells[cell.XLocation - 1, cell.YLocation + 1].CellValue == 9)
+                {
+                    value++;
+                }
+            }
+            if (cell.YLocation + 1 < height)
+            {
+                if (cells[cell.XLocation, cell.YLocation + 1].CellValue == 9)
+                {
+                    value++;
+                }
+            }
+            if (cell.XLocation + 1 < width && cell.YLocation + 1 < height)
+            {
+                if (cells[cell.XLocation + 1, cell.YLocation + 1].CellValue == 9)
+                {
+                    value++;
+                }
+            }
+            return value;
         }
     }
 }
