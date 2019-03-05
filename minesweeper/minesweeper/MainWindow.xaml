@@ -7,8 +7,26 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="800">
     <Grid>
-        <Button x:Name="SubmitBtn" Content="Submit" HorizontalAlignment="Left" Background="GreenYellow" Margin="296,8,0,0" VerticalAlignment="Top" Width="83" Height="25" Click="SubmitBtn_OnClick"/>
-        <TextBox x:Name="RowTbx"  HorizontalAlignment="Left" Height="23" Margin="10,8,0,0" TextWrapping="Wrap" Text="Number of Rows" VerticalAlignment="Top"  Width="120" GotFocus="RowTbx_GotFocus"/>
-        <TextBox x:Name="ColTbx" HorizontalAlignment="Left" Height="23" Margin="153,8,0,0" TextWrapping="Wrap" Text="Number of Columns" VerticalAlignment="Top" Width="120" GotFocus="ColTbx_GotFocus"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="163*"/>
+            <ColumnDefinition Width="233*"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="769" VerticalAlignment="Top" Width="792" Background="Gray"/>
+        <Border x:Name="bkgGameOptions" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="260" VerticalAlignment="Top" Width="136" Margin="309,186,0,0" Background="White" Grid.ColumnSpan="2" Visibility="Hidden"/>
+        <Button x:Name="SubmitBtn" Content="Submit" HorizontalAlignment="Left" Background="GreenYellow" Margin="10,378,0,0" VerticalAlignment="Top" Width="82" Height="30" Click="SubmitBtn_OnClick" Grid.Column="1" Visibility="Hidden"/>
+        <GroupBox x:Name="grpGridSize" Header="Grid Size" HorizontalAlignment="Left" Margin="0,212,0,0" VerticalAlignment="Top" Width="100" Height="90" Background="White" Grid.Column="1" Visibility="Hidden">
+            <StackPanel x:Name="GridSize" HorizontalAlignment="Left" Height="66" Margin="-6,1,-6,0" VerticalAlignment="Top" Width="100">
+                <TextBox x:Name="txtHeight" Height="23" TextWrapping="Wrap" PreviewTextInput="txtHeight_PreviewTextInput" Text="Height" GotFocus="txtHeight_GotFocus"/>
+                <TextBox x:Name="txtWidth" Height="23" TextWrapping="Wrap" PreviewTextInput="txtWidth_PreviewTextInput" Text="Width" GotFocus="txtWidth_GotFocus"/>
+                <Button x:Name="btnGridSize" Content="Enter" Click="btnGridSize_Click"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="grpBombs" Header="Difficulty" HorizontalAlignment="Left" Margin="0,307,0,0" VerticalAlignment="Top" Width="100" Height="66" Background="White" Grid.Column="1" Visibility="Hidden">
+            <StackPanel x:Name="BombChoice" HorizontalAlignment="Left" Height="58" Margin="-6,1,-6,-15" VerticalAlignment="Top" Width="100">
+                <TextBox x:Name="txtBombs" Height="23" TextWrapping="Wrap" PreviewTextInput="txtBombs_PreviewTextInput" Text="Bombs" GotFocus="txtBombs_GotFocus"/>
+                <Button x:Name="btnBombs" Content="Enter" Click="btnBombs_Click"/>
+            </StackPanel>
+        </GroupBox>
+        <Button x:Name="btnSetup" Content="Get Sweeping!" HorizontalAlignment="Left" Margin="4,289,0,0" VerticalAlignment="Top" Width="96" Click="btnSetup_Click" Height="26" Grid.Column="1"/>
     </Grid>
 </Window>

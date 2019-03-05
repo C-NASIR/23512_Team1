@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace minesweeper
 {
@@ -27,6 +28,23 @@ namespace minesweeper
         {
             InitializeComponent();
 
+        }
+
+        //pattern for numbers only
+        private static readonly Regex _regex = new Regex("[^0-9]+"); //regex that matches disallowed text
+
+        //variables to store user input
+        public int game_height;
+        public int game_width;
+        public int game_bombs;
+
+        //max bombs set to 1/3 of board size
+        public int max_bombs;
+
+        private static bool IsTextAllowed(string text)
+        {
+
+            return !_regex.IsMatch(text);
         }
 
         /// <summary>
@@ -79,28 +97,98 @@ namespace minesweeper
             this.Content = dynamicGrid;
         }
 
+        //Prevents improper input
+        private void txtHeight_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
+
+        //Prevents improper input
+        private void txtWidth_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
+
+        //Prevents improper input
+        private void txtBombs_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
+
+        //Button shows user txt input fields
+        private void btnSetup_Click(object sender, RoutedEventArgs e)
+        {
+            btnSetup.Visibility = Visibility.Collapsed;
+            grpGridSize.Visibility = Visibility.Visible;
+            bkgGameOptions.Visibility = Visibility.Visible;
+        }
+
+        /*Click event for grid size selection. Will check for proper input before allowing
+        * the user to select # of bombs.*/
+        private void btnGridSize_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtHeight.Text == "" || txtWidth.Text == "" || txtHeight.Text.Contains("H") == true || txtWidth.Text.Contains("W") == true)
+            {
+                MessageBox.Show("Please enter a grid height and width.");
+
+            }
+            else
+            {
+                //If input is correct users will be allowed to enter # of bombs
+                game_height = int.Parse(txtHeight.Text);
+                game_width = int.Parse(txtWidth.Text);
+                max_bombs = (game_height * game_width) / 3;
+                MessageBox.Show("You selected a " + game_height + " by " + game_width + " board.");
+                GridSize.IsEnabled = false;
+                grpBombs.IsEnabled = true;
+                grpBombs.Visibility = Visibility.Visible;
+            }
+        }
+
+        /*Click event for bomb selection. Will check for proper input before allowing
+        * the user to create grid.*/
+        private void btnBombs_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtBombs.Text == "" || txtBombs.Text.Contains("B") == true)
+            {
+                MessageBox.Show("Please enter a number of bombs.");
+            }
+            else if (int.Parse(txtBombs.Text) > max_bombs)
+            {
+                MessageBox.Show("This board only allows " + max_bombs + " bombs.");
+            }
+            else
+            {
+                //if input is correct users will be able to create grid.
+                game_bombs = int.Parse(txtBombs.Text);
+                MessageBox.Show("You selected " + game_bombs + " bombs on a " + game_height + " by " + game_width + " board.");
+                BombChoice.IsEnabled = false;
+                SubmitBtn.Visibility = Visibility.Visible;
+            }
+        }
+
         private void SubmitBtn_OnClick(object sender, RoutedEventArgs e)
         {
             // TODO: instantiate GameLogic class and move code below to game logic
-            
+
             //Creating variables to hold the numbers
-            int numrows, numcolumns;
+            int numRow, numCol;
 
 
             //checking if the user entered legit number of columns
-            if (int.TryParse(ColTbx.Text, out numcolumns))
+            if (int.TryParse(txtWidth.Text, out numCol))
             {
                 //Assigning the number of columns
-                numcolumns = int.Parse(ColTbx.Text);
+                numCol = int.Parse(txtWidth.Text);
 
                 //checking if the user entered legit number of rows
-                if (int.TryParse(RowTbx.Text, out numrows))
+                if (int.TryParse(txtHeight.Text, out numRow))
                 {
                     //assigning the number of rows
-                    numrows = int.Parse(RowTbx.Text);
+                    numRow = int.Parse(txtHeight.Text);
 
                     //Calling the dynamic grid creator method
-                    DynamicGridCreator(numrows, numcolumns);
+                    DynamicGridCreator(numRow, numCol);
                 }
                 else
                 {
@@ -115,17 +203,22 @@ namespace minesweeper
             }
         }
 
-        private void RowTbx_GotFocus(object sender, RoutedEventArgs e)
+        //Removes label text from txtBox as user selects it
+        private void txtHeight_GotFocus(object sender, RoutedEventArgs e)
         {
-            //clearing the rows textbox placeholder after it gets focus
-            RowTbx.Text = "";
+            txtHeight.Text = "";
         }
 
-        private void ColTbx_GotFocus(object sender, RoutedEventArgs e)
+        //Removes label text from txtBox as user selects it
+        private void txtWidth_GotFocus(object sender, RoutedEventArgs e)
         {
-            //clearing the columns textbox placeholder after it gets focus
-            ColTbx.Text = "";
+            txtWidth.Text = "";
         }
 
+        //Removes label text from txtBox as user selects it
+        private void txtBombs_GotFocus(object sender, RoutedEventArgs e)
+        {
+            txtBombs.Text = "";
+        }
     }
 }
