@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,14 +88,23 @@ namespace minesweeper
                 {
                     Button btn = new Button();
                     btn.Name = "btn" + x + y;
+
+                    //Creating the event signature
+                    btn.Click += new RoutedEventHandler(btn_click);
                     Grid.SetColumn(btn, x);
                     Grid.SetRow(btn, y);
                     dynamicGrid.Children.Add(btn);
                 }            
             }
-
             //adding the dynamic grid to the mainwindow
-            this.Content = dynamicGrid;
+            Content = dynamicGrid;
+        }
+
+
+        //This is the click event of the dynamic event handler
+        void btn_click(object sender, EventArgs e)
+        {
+            
         }
 
         //Prevents improper input
@@ -188,7 +198,7 @@ namespace minesweeper
                     numRow = int.Parse(txtHeight.Text);
 
                     //Calling the dynamic grid creator method
-                    DynamicGridCreator(numRow, numCol);
+                    DynamicGridCreator(numRow, numCol, TODO);
                 }
                 else
                 {
