@@ -33,6 +33,9 @@ namespace minesweeper
             flagged = false;
         }
 
+        // Empty Cell Constructor--for Game Logic Use only
+        public Cell(){}
+
         // public property of xLocation
         public int XLocation
         {

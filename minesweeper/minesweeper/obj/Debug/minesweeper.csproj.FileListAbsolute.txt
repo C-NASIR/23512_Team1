@@ -79,3 +79,6 @@ C:\Users\willi\OneDrive\Documents\NWTC\2019\Spring 2019\Team Software Dev\Week6\
 C:\Users\willi\OneDrive\Documents\NWTC\2019\Spring 2019\Team Software Dev\Week6\minesweeper\minesweeper\minesweeper\obj\Debug\minesweeper.csproj.CoreCompileInputs.cache
 C:\Users\willi\OneDrive\Documents\NWTC\2019\Spring 2019\Team Software Dev\Week6\minesweeper\minesweeper\minesweeper\obj\Debug\minesweeper.exe
 C:\Users\willi\OneDrive\Documents\NWTC\2019\Spring 2019\Team Software Dev\Week6\minesweeper\minesweeper\minesweeper\obj\Debug\minesweeper.pdb
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\bin\Debug\minesweeper.exe.config
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.exe
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.pdb

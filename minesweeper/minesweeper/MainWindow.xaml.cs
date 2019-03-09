@@ -28,7 +28,6 @@ namespace minesweeper
         public MainWindow()
         {
             InitializeComponent();
-
         }
 
         //pattern for numbers only
