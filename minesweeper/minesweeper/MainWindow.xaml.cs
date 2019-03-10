@@ -197,7 +197,7 @@ namespace minesweeper
                     numRow = int.Parse(txtHeight.Text);
 
                     //Calling the dynamic grid creator method
-                    DynamicGridCreator(numRow, numCol, TODO);
+                    DynamicGridCreator(numRow, numCol);
                 }
                 else
                 {
