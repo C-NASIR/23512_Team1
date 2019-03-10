@@ -34,6 +34,12 @@ namespace minesweeper
 
             return chosenCell.CellDisplayValue;
         }
+
+
+        public void Inputchecker()
+        {
+
+        }
     }
 
 
