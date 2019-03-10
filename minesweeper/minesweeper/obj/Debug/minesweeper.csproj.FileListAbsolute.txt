@@ -95,3 +95,6 @@ C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweepe
 C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.g.resources
 C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.Properties.Resources.resources
 C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.csproj.GenerateResource.Cache
+C:\NWTC\Minesweeper\minesweeper\minesweeper\bin\Debug\minesweeper.exe.config
+C:\NWTC\Minesweeper\minesweeper\minesweeper\obj\Debug\minesweeper.exe
+C:\NWTC\Minesweeper\minesweeper\minesweeper\obj\Debug\minesweeper.pdb

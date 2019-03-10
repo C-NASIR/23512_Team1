@@ -25,6 +25,8 @@ namespace minesweeper
     {
         public const int BOXSIZE = 25;
 
+        private GameLogic game;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -103,7 +105,8 @@ namespace minesweeper
         //This is the click event of the dynamic event handler
         void btn_click(object sender, EventArgs e)
         {
-            
+            Button s = sender as Button;
+            s.Content = game.ButtonLeftClicked(s.Name);
         }
 
         //Prevents improper input
@@ -136,10 +139,9 @@ namespace minesweeper
         * the user to select # of bombs.*/
         private void btnGridSize_Click(object sender, RoutedEventArgs e)
         {
-            if (txtHeight.Text == "" || txtWidth.Text == "" || txtHeight.Text.Contains("H") == true || txtWidth.Text.Contains("W") == true)
+            if (txtHeight.Text == "" || txtWidth.Text == "" || txtHeight.Text.Contains("H") || txtWidth.Text.Contains("W"))
             {
                 MessageBox.Show("Please enter a grid height and width.");
-
             }
             else
             {
@@ -157,7 +159,7 @@ namespace minesweeper
         * the user to create grid.*/
         private void btnBombs_Click(object sender, RoutedEventArgs e)
         {
-            if (txtBombs.Text == "" || txtBombs.Text.Contains("B") == true)
+            if (txtBombs.Text == "" || txtBombs.Text.Contains("B"))
             {
                 MessageBox.Show("Please enter a number of bombs.");
             }
@@ -179,7 +181,7 @@ namespace minesweeper
             //call the input checker method
             if (Inputchecker(txtWidth.Text, txtHeight.Text, txtBombs.Text))
             {
-                GameLogic gameLogic = new GameLogic(int.Parse(txtWidth.Text),int.Parse(txtHeight.Text),int.Parse(txtBombs.Text));
+                game = new GameLogic(int.Parse(txtWidth.Text),int.Parse(txtHeight.Text),int.Parse(txtBombs.Text));
             }
         }
 
