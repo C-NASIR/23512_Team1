@@ -50,7 +50,7 @@ namespace minesweeper
         /// <summary>
         /// This Method Creates Dynamic Grid by using the number of rows and columns the user entered
         /// </summary>
-        public void DynamicGridCreator(int numrows, int numColumns)
+        public  void DynamicGridCreator(int numrows, int numColumns)
         {
             //initiating the new dynamic grid: giving some values and setting some properties
             Grid dynamicGrid = new Grid();
@@ -147,7 +147,6 @@ namespace minesweeper
                 game_height = int.Parse(txtHeight.Text);
                 game_width = int.Parse(txtWidth.Text);
                 max_bombs = (game_height * game_width) / 3;
-                MessageBox.Show("You selected a " + game_height + " by " + game_width + " board.");
                 GridSize.IsEnabled = false;
                 grpBombs.IsEnabled = true;
                 grpBombs.Visibility = Visibility.Visible;
@@ -170,7 +169,6 @@ namespace minesweeper
             {
                 //if input is correct users will be able to create grid.
                 game_bombs = int.Parse(txtBombs.Text);
-                MessageBox.Show("You selected " + game_bombs + " bombs on a " + game_height + " by " + game_width + " board.");
                 BombChoice.IsEnabled = false;
                 SubmitBtn.Visibility = Visibility.Visible;
             }
@@ -178,42 +176,11 @@ namespace minesweeper
 
         private void SubmitBtn_OnClick(object sender, RoutedEventArgs e)
         {
-<<<<<<< HEAD
-            //GameLogic  GameLogic = new GameLogic();
-=======
-            // TODO: instantiate GameLogic class and move code below to game logic
-
-            //Creating variables to hold the numbers
-            int numRow, numCol;
-
-
-            //checking if the user entered legit number of columns
-            if (int.TryParse(txtWidth.Text, out numCol))
+            //call the input checker method
+            if (Inputchecker(txtWidth.Text, txtHeight.Text, txtBombs.Text))
             {
-                //Assigning the number of columns
-                numCol = int.Parse(txtWidth.Text);
-
-                //checking if the user entered legit number of rows
-                if (int.TryParse(txtHeight.Text, out numRow))
-                {
-                    //assigning the number of rows
-                    numRow = int.Parse(txtHeight.Text);
-
-                    //Calling the dynamic grid creator method
-                    DynamicGridCreator(numRow, numCol);
-                }
-                else
-                {
-                    //catching the error if the user enteres invalid number rows
-                    MessageBox.Show("Please Enter a Valid number of rows");
-                }
+                GameLogic gameLogic = new GameLogic(int.Parse(txtWidth.Text),int.Parse(txtHeight.Text),int.Parse(txtBombs.Text));
             }
-            else
-            {
-                //catching the error if the user enteres invalid number of columns
-                MessageBox.Show("Please Enter a valid number of columns");
-            }
->>>>>>> c682597133d46c4cd63fed30debe30f75077499c
         }
 
         //Removes label text from txtBox as user selects it
@@ -232,6 +199,43 @@ namespace minesweeper
         private void txtBombs_GotFocus(object sender, RoutedEventArgs e)
         {
             txtBombs.Text = "";
+        }
+        //Check the User input 
+        public bool Inputchecker(string xNumber, string yNumber, string numMines)
+        {
+            bool checker = false;
+            int x, y, numMine;
+            //checking if the user entered legit number of columns
+            if (int.TryParse(xNumber, out x))
+            {
+                //checking if the user entered legit number of rows
+                if (int.TryParse(yNumber, out y))
+                {
+                    if (int.TryParse(numMines, out numMine))
+                    {
+                        //Calling the dynamic grid creator method
+                        DynamicGridCreator(x, y);
+                        checker = true;
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please Enter a Valid number of rows");
+                    }
+                }
+                else
+                {
+                    //catching the error if the user enteres invalid number rows
+                    MessageBox.Show("Please Enter a Valid number of rows");
+                }
+            }
+            else
+            {
+                //catching the error if the user enteres invalid number of columns
+                MessageBox.Show("Please Enter a valid number of columns");
+            }
+
+            return checker;
         }
     }
 }

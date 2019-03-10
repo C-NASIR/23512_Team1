@@ -5,21 +5,23 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using minesweeper;
 
 namespace minesweeper
 {
-    class GameLogic : MainWindow
+    class GameLogic
     {
         // TODO: Move width, height and mine validation
         // from MineField constructor
 
         // instantiate the MineField
-        MineField game = new MineField(9, 9, 3);
+        private MineField game;
 
         //GameLogic constractor
-        public GameLogic(string x, string y, string numMine)
+        public GameLogic(int x, int y, int numMine)
         {
-            MineField game = new MineField(x, y, numMine);
+            //creating the minefield
+             game =  new MineField(x,y,numMine);
         }
 
         public string ButtonLeftClicked(string btnName)
@@ -41,38 +43,6 @@ namespace minesweeper
 
             return chosenCell.CellDisplayValue;
         }
-
-
-        //Check the User input 
-        public bool Inputchecker(string xNumber, string yNumber, string numMines)
-        {
-            bool checker =  false;
-            int x, y, numMine;
-            //checking if the user entered legit number of columns
-            if (int.TryParse(xNumber, out x))
-            {
-                //checking if the user entered legit number of rows
-                if (int.TryParse(yNumber, out y))
-                {
-                    //Calling the dynamic grid creator method
-                    DynamicGridCreator(x, y);
-                    checker = true;
-                }
-                else
-                {
-                    //catching the error if the user enteres invalid number rows
-                    MessageBox.Show("Please Enter a Valid number of rows");
-                }
-            }
-            else
-            {
-                //catching the error if the user enteres invalid number of columns
-                MessageBox.Show("Please Enter a valid number of columns");
-            }
-
-            return checker;
-        }
-
 
     }
 
