@@ -178,7 +178,42 @@ namespace minesweeper
 
         private void SubmitBtn_OnClick(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             //GameLogic  GameLogic = new GameLogic();
+=======
+            // TODO: instantiate GameLogic class and move code below to game logic
+
+            //Creating variables to hold the numbers
+            int numRow, numCol;
+
+
+            //checking if the user entered legit number of columns
+            if (int.TryParse(txtWidth.Text, out numCol))
+            {
+                //Assigning the number of columns
+                numCol = int.Parse(txtWidth.Text);
+
+                //checking if the user entered legit number of rows
+                if (int.TryParse(txtHeight.Text, out numRow))
+                {
+                    //assigning the number of rows
+                    numRow = int.Parse(txtHeight.Text);
+
+                    //Calling the dynamic grid creator method
+                    DynamicGridCreator(numRow, numCol);
+                }
+                else
+                {
+                    //catching the error if the user enteres invalid number rows
+                    MessageBox.Show("Please Enter a Valid number of rows");
+                }
+            }
+            else
+            {
+                //catching the error if the user enteres invalid number of columns
+                MessageBox.Show("Please Enter a valid number of columns");
+            }
+>>>>>>> c682597133d46c4cd63fed30debe30f75077499c
         }
 
         //Removes label text from txtBox as user selects it

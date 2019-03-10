@@ -82,3 +82,16 @@ C:\Users\willi\OneDrive\Documents\NWTC\2019\Spring 2019\Team Software Dev\Week6\
 C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\bin\Debug\minesweeper.exe.config
 C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.exe
 C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.pdb
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\bin\Debug\minesweeper.exe
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\bin\Debug\minesweeper.pdb
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.csprojResolveAssemblyReference.cache
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\Board.g.cs
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\MainWindow.g.cs
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\App.g.cs
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper_MarkupCompile.cache
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper_MarkupCompile.lref
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\Board.baml
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\MainWindow.baml
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.g.resources
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.Properties.Resources.resources
+C:\Users\Julie\Source\Repos\profscottpeterson\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.csproj.GenerateResource.Cache
