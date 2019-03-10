@@ -4,16 +4,23 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace minesweeper
 {
-    class GameLogic
+    class GameLogic : MainWindow
     {
         // TODO: Move width, height and mine validation
         // from MineField constructor
 
         // instantiate the MineField
-        MineField game = new MineField(9,9,3);
+        MineField game = new MineField(9, 9, 3);
+
+        //GameLogic constractor
+        public GameLogic(string x, string y, string numMine)
+        {
+            MineField game = new MineField(x, y, numMine);
+        }
 
         public string ButtonLeftClicked(string btnName)
         {
@@ -36,10 +43,37 @@ namespace minesweeper
         }
 
 
-        public void Inputchecker()
+        //Check the User input 
+        public bool Inputchecker(string xNumber, string yNumber, string numMines)
         {
+            bool checker =  false;
+            int x, y, numMine;
+            //checking if the user entered legit number of columns
+            if (int.TryParse(xNumber, out x))
+            {
+                //checking if the user entered legit number of rows
+                if (int.TryParse(yNumber, out y))
+                {
+                    //Calling the dynamic grid creator method
+                    DynamicGridCreator(x, y);
+                    checker = true;
+                }
+                else
+                {
+                    //catching the error if the user enteres invalid number rows
+                    MessageBox.Show("Please Enter a Valid number of rows");
+                }
+            }
+            else
+            {
+                //catching the error if the user enteres invalid number of columns
+                MessageBox.Show("Please Enter a valid number of columns");
+            }
 
+            return checker;
         }
+
+
     }
 
 
