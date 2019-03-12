@@ -27,6 +27,8 @@ namespace minesweeper
 
         private GameLogic game;
 
+        private IEnumerable<Control> controls;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -88,7 +90,7 @@ namespace minesweeper
                 for (int x = 0; x < numColumns; x++)
                 {
                     Button btn = new Button();
-                    btn.Name = "btn" + x + y;
+                    btn.Name = "btn" + y + x;
 
                     //Creating the event signature
                     btn.Click += new RoutedEventHandler(btn_click);
@@ -99,6 +101,8 @@ namespace minesweeper
             }
             //adding the dynamic grid to the mainwindow
             Content = dynamicGrid;
+
+            controls = FindVisualChildren<Control>(Application.Current.MainWindow);
         }
 
 
@@ -106,7 +110,46 @@ namespace minesweeper
         void btn_click(object sender, EventArgs e)
         {
             Button s = sender as Button;
-            s.Content = game.ButtonLeftClicked(s.Name);
+            List<string> cells = game.ButtonLeftClicked(s.Name);
+
+            foreach (string n in cells)
+            {
+                int cellLocationX;
+                int cellLocationY;
+                int.TryParse(n.Substring(0, 1), out cellLocationY);
+                int.TryParse(n.Substring(1, 1), out cellLocationX);
+
+                foreach (Button b in controls)
+                {
+                    if (b.Name == "btn" + cellLocationY + cellLocationX)
+                    {
+                        b.Content = game.Game.Cells[cellLocationY, cellLocationX].CellDisplayValue;
+                        //visual inset change
+                        break;
+                    }
+                }
+            }
+        }
+
+        //Find all controls in the window
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
         }
 
         //Prevents improper input

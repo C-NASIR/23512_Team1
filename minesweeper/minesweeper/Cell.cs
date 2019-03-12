@@ -69,7 +69,7 @@ namespace minesweeper
             {
                 if (cellValue < 9)
                 {
-                    if (cellValue != 0)
+                    if (cellValue > 0)
                     {
                         cellDisplayValue = cellValue.ToString();
                     }

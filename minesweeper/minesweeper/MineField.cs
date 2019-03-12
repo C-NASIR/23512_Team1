@@ -22,6 +22,18 @@ namespace minesweeper
 
         // The timer
         // TODO: Create Timer
+        
+        // public access to width
+        public int Width
+        {
+            get { return width; }
+        }
+
+        // public access to height
+        public int Height
+        {
+            get { return height; }
+        }
 
         // public access to cells
         public Cell[,] Cells
@@ -40,7 +52,7 @@ namespace minesweeper
                     mines = numMines;
                     width = xWidth;
                     height = yHeight;
-                    cells = new Cell[width, height];
+                    cells = new Cell[height, width];
 
                     // instantiate the remaining cells (Joe)
                     PopulateCells();
@@ -56,9 +68,9 @@ namespace minesweeper
                     {
                         for (int y = 0; y < height; y++)
                         {
-                            if (cells[x, y].CellValue != 9)
+                            if (cells[y, x].CellValue != 9)
                             {
-                                cells[x, y].CellValue = CreateValue(cells[x,y]);
+                                cells[y, x].CellValue = CreateValue(cells[y, x]);
                             }                        
                         }
                     }
@@ -82,7 +94,7 @@ namespace minesweeper
             {
                 for (int y = 0; y < height; y++)
                 {
-                    cells[x,y] = new Cell(0,x,y);
+                    cells[y, x] = new Cell(0,x,y);
                 }
             }
         }
@@ -106,9 +118,9 @@ namespace minesweeper
             {
                 x = MineCoordinateGenerator(width);
                 y = MineCoordinateGenerator(height);
-                if (cells[x, y].CellValue != 9)
+                if (cells[y, x].CellValue != 9)
                 {
-                    cells[x, y].CellValue = 9;
+                    cells[y, x].CellValue = 9;
                     sameLocation = false;
                 }
                 else
@@ -122,58 +134,58 @@ namespace minesweeper
         private int CreateValue(Cell cell)
         {
             int value = 0;
-            if (cell.XLocation - 1 >= 0 && cell.YLocation - 1 >= 0)
+            if (cell.YLocation - 1 >= 0 && cell.XLocation - 1 >= 0)
             {
-                if (cells[cell.XLocation - 1, cell.YLocation - 1].CellValue == 9)
-                {
-                    value++;
-                }
-            }
-            if (cell.YLocation - 1 >= 0)
-            {
-                if (cells[cell.XLocation, cell.YLocation - 1].CellValue == 9)
-                {
-                    value++;
-                }
-            }
-            if (cell.XLocation + 1 < width && cell.YLocation - 1 >= 0)
-            {
-                if (cells[cell.XLocation + 1, cell.YLocation - 1].CellValue == 9)
+                if (cells[cell.YLocation - 1, cell.XLocation - 1].CellValue == 9)
                 {
                     value++;
                 }
             }
             if (cell.XLocation - 1 >= 0)
             {
-                if (cells[cell.XLocation - 1, cell.YLocation].CellValue == 9)
+                if (cells[cell.YLocation, cell.XLocation - 1].CellValue == 9)
                 {
                     value++;
                 }
             }
-            if (cell.XLocation + 1 < width)
+            if (cell.YLocation + 1 < height && cell.XLocation - 1 >= 0)
             {
-                if (cells[cell.XLocation + 1, cell.YLocation].CellValue == 9)
+                if (cells[cell.YLocation + 1, cell.XLocation - 1].CellValue == 9)
                 {
                     value++;
                 }
             }
-            if (cell.XLocation - 1 >= 0 && cell.YLocation + 1 < height)
+            if (cell.YLocation - 1 >= 0)
             {
-                if (cells[cell.XLocation - 1, cell.YLocation + 1].CellValue == 9)
+                if (cells[cell.YLocation - 1, cell.XLocation].CellValue == 9)
                 {
                     value++;
                 }
             }
             if (cell.YLocation + 1 < height)
             {
-                if (cells[cell.XLocation, cell.YLocation + 1].CellValue == 9)
+                if (cells[cell.YLocation + 1, cell.XLocation].CellValue == 9)
                 {
                     value++;
                 }
             }
-            if (cell.XLocation + 1 < width && cell.YLocation + 1 < height)
+            if (cell.YLocation - 1 >= 0 && cell.XLocation + 1 < width)
             {
-                if (cells[cell.XLocation + 1, cell.YLocation + 1].CellValue == 9)
+                if (cells[cell.YLocation - 1, cell.XLocation + 1].CellValue == 9)
+                {
+                    value++;
+                }
+            }
+            if (cell.XLocation + 1 < width)
+            {
+                if (cells[cell.YLocation, cell.XLocation + 1].CellValue == 9)
+                {
+                    value++;
+                }
+            }
+            if (cell.YLocation + 1 < height && cell.XLocation + 1 < width)
+            {
+                if (cells[cell.YLocation + 1, cell.XLocation + 1].CellValue == 9)
                 {
                     value++;
                 }
