@@ -24,7 +24,7 @@ namespace minesweeper
         }
 
         //GameLogic constractor
-        public GameLogic(int x, int y, int numMine)
+        public GameLogic(int y, int x, int numMine)
         {
             //creating the minefield
              game =  new MineField(x,y,numMine);
@@ -37,8 +37,9 @@ namespace minesweeper
 
             int cellLocationX;
             int cellLocationY;
-            int.TryParse(btnName.Substring(3, 1), out cellLocationY);   //switch this y and x where we parse
-            int.TryParse(btnName.Substring(4, 1), out cellLocationX);
+            string[] name = btnName.Split('_');
+            int.TryParse(name[1], out cellLocationY);   //switch this y and x where we parse
+            int.TryParse(name[2], out cellLocationX);
             Cell chosenCell = game.Cells[cellLocationY, cellLocationX];
             if (chosenCell.CellValue == 0)
             {
@@ -50,11 +51,11 @@ namespace minesweeper
             else if (chosenCell.CellValue == 9)
             {
                 //game over
-                stringCells.Add(chosenCell.YLocation + chosenCell.XLocation.ToString());
+                stringCells.Add(chosenCell.YLocation + "_" + chosenCell.XLocation.ToString());
             }
             else
             {
-                stringCells.Add(chosenCell.YLocation + chosenCell.XLocation.ToString());
+                stringCells.Add(chosenCell.YLocation + "_" + chosenCell.XLocation.ToString());
             }
 
             return stringCells;
@@ -77,7 +78,7 @@ namespace minesweeper
                 else if(game.Cells[cell.YLocation - 1, cell.XLocation - 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation - 1, cell.XLocation - 1].YLocation +
-                        game.Cells[cell.YLocation - 1, cell.XLocation - 1].XLocation.ToString());
+                                      "_" + game.Cells[cell.YLocation - 1, cell.XLocation - 1].XLocation.ToString());
                 }
             }
             if (cell.XLocation - 1 >= 0)
@@ -92,7 +93,7 @@ namespace minesweeper
                 else if (game.Cells[cell.YLocation, cell.XLocation - 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation, cell.XLocation - 1].YLocation +
-                        game.Cells[cell.YLocation, cell.XLocation - 1].XLocation.ToString());
+                                      "_" + game.Cells[cell.YLocation, cell.XLocation - 1].XLocation.ToString());
                 }
             }
             if (cell.YLocation + 1 < game.Height && cell.XLocation - 1 >= 0)
@@ -107,7 +108,7 @@ namespace minesweeper
                 else if (game.Cells[cell.YLocation + 1, cell.XLocation - 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation + 1, cell.XLocation - 1].YLocation +
-                        game.Cells[cell.YLocation + 1, cell.XLocation - 1].XLocation.ToString());
+                                      "_" + game.Cells[cell.YLocation + 1, cell.XLocation - 1].XLocation.ToString());
                 }
             }
             if (cell.YLocation - 1 >= 0)
@@ -122,7 +123,7 @@ namespace minesweeper
                 else if (game.Cells[cell.YLocation - 1, cell.XLocation].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation - 1, cell.XLocation].YLocation +
-                        game.Cells[cell.YLocation - 1, cell.XLocation].XLocation.ToString());
+                                      "_" + game.Cells[cell.YLocation - 1, cell.XLocation].XLocation.ToString());
                 }
             }
             if (cell.YLocation + 1 < game.Height)
@@ -137,7 +138,7 @@ namespace minesweeper
                 else if (game.Cells[cell.YLocation + 1, cell.XLocation].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation + 1, cell.XLocation].YLocation +
-                        game.Cells[cell.YLocation + 1, cell.XLocation].XLocation.ToString());
+                                      "_" + game.Cells[cell.YLocation + 1, cell.XLocation].XLocation.ToString());
                 }
             }
             if (cell.YLocation - 1 >= 0 && cell.XLocation + 1 < game.Width)
@@ -152,7 +153,7 @@ namespace minesweeper
                 else if (game.Cells[cell.YLocation - 1, cell.XLocation + 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation - 1, cell.XLocation + 1].YLocation +
-                        game.Cells[cell.YLocation - 1, cell.XLocation + 1].XLocation.ToString());
+                                      "_" + game.Cells[cell.YLocation - 1, cell.XLocation + 1].XLocation.ToString());
                 }
             }
             if (cell.XLocation + 1 < game.Width)
@@ -167,7 +168,7 @@ namespace minesweeper
                 else if (game.Cells[cell.YLocation, cell.XLocation + 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation, cell.XLocation + 1].YLocation +
-                        game.Cells[cell.YLocation, cell.XLocation + 1].XLocation.ToString());
+                                      "_" + game.Cells[cell.YLocation, cell.XLocation + 1].XLocation.ToString());
                 }
             }
             if (cell.YLocation + 1 < game.Height && cell.XLocation + 1 < game.Width)
@@ -182,7 +183,7 @@ namespace minesweeper
                 else if (game.Cells[cell.YLocation + 1, cell.XLocation + 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation + 1, cell.XLocation + 1].YLocation +
-                        game.Cells[cell.YLocation + 1, cell.XLocation + 1].XLocation.ToString());
+                                      "_" + game.Cells[cell.YLocation + 1, cell.XLocation + 1].XLocation.ToString());
                 }
             }
             return returnedCells;

@@ -90,7 +90,7 @@ namespace minesweeper
                 for (int x = 0; x < numColumns; x++)
                 {
                     Button btn = new Button();
-                    btn.Name = "btn" + y + x;
+                    btn.Name = "btn_" + y + "_" + x;
 
                     //Creating the event signature
                     btn.Click += new RoutedEventHandler(btn_click);
@@ -116,12 +116,13 @@ namespace minesweeper
             {
                 int cellLocationX;
                 int cellLocationY;
-                int.TryParse(n.Substring(0, 1), out cellLocationY);
-                int.TryParse(n.Substring(1, 1), out cellLocationX);
+                string[] btnName = n.Split('_');
+                int.TryParse(btnName[0], out cellLocationY);
+                int.TryParse(btnName[1], out cellLocationX);
 
                 foreach (Button b in controls)
                 {
-                    if (b.Name == "btn" + cellLocationY + cellLocationX)
+                    if (b.Name == "btn_" + cellLocationY + "_" + cellLocationX)
                     {
                         b.Content = game.Game.Cells[cellLocationY, cellLocationX].CellDisplayValue;
                         //visual inset change
