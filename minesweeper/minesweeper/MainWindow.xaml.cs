@@ -125,7 +125,7 @@ namespace minesweeper
                     if (b.Name == "btn_" + cellLocationY + "_" + cellLocationX)
                     {
                         b.Content = game.Game.Cells[cellLocationY, cellLocationX].CellDisplayValue;
-                        //visual inset change
+                        AnimationBTN(b);
                         break;
                     }
                 }
@@ -227,6 +227,12 @@ namespace minesweeper
             {
                 game = new GameLogic(int.Parse(txtWidth.Text),int.Parse(txtHeight.Text),int.Parse(txtBombs.Text));
             }
+        }
+
+        //Button Animation method
+        private void AnimationBTN(Button b)
+        {
+            b.Background = Brushes.Yellow;
         }
 
         //Removes label text from txtBox as user selects it
