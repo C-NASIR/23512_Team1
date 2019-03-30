@@ -136,7 +136,7 @@ namespace minesweeper
                 int.TryParse(btnName[0], out cellLocationY);
                 int.TryParse(btnName[1], out cellLocationX);
 
-                foreach (Button b in controls)
+                foreach (Button b in controls.OfType<Button>())
                 {
                     if (b.Name == "btn_" + cellLocationY + "_" + cellLocationX)
                     {
@@ -167,11 +167,11 @@ namespace minesweeper
                 {
                     if (game.FlagCounter == 0)
                     {
-                        l.Name = "Flags: ";
+                        l.Content = "Flags: ";
                     }
                     else
                     {
-                        l.Name = "Flags: " + game.FlagCounter.ToString();
+                        l.Content = "Flags: " + game.FlagCounter.ToString();
                     }
 
                     break;
@@ -344,7 +344,7 @@ namespace minesweeper
             windowGrid.HorizontalAlignment = HorizontalAlignment.Center;
             windowGrid.VerticalAlignment = VerticalAlignment.Center;
             windowGrid.ShowGridLines = true;
-            windowGrid.Background = new SolidColorBrush(Colors.AntiqueWhite);
+            windowGrid.Background = new SolidColorBrush(Colors.DarkOliveGreen);
 
             //Define the number of columns in the window (1) at the width of the window
             ColumnDefinition column = new ColumnDefinition();
@@ -374,6 +374,9 @@ namespace minesweeper
             Grid.SetColumn(gameBoard, 0);
             Grid.SetRow(gameBoard, 1);
 
+            //Add the statusBar
+            windowGrid.Children.Add(statusStrip);
+
             //Add the gameboard
             windowGrid.Children.Add(gameBoard);
 
@@ -391,7 +394,7 @@ namespace minesweeper
             statusGrid.HorizontalAlignment = HorizontalAlignment.Center;
             statusGrid.VerticalAlignment = VerticalAlignment.Center;
             statusGrid.ShowGridLines = true;
-            statusGrid.Background = new SolidColorBrush(Colors.Black);
+            statusGrid.Background = new VisualBrush();
 
             //Define the number of columns in the window (3)
             //First column = 2/5ths of window
@@ -409,6 +412,10 @@ namespace minesweeper
             status3.Width = new GridLength((this.Width / 5) * 2);
             statusGrid.ColumnDefinitions.Add(status3);
 
+            //Define the row (1) at size 50
+            RowDefinition row1 = new RowDefinition();
+            row1.Height = new GridLength(50);
+            statusGrid.RowDefinitions.Add(row1);
 
             // Create Flag Counter Label
             Label flagLabel = new Label();
@@ -416,9 +423,12 @@ namespace minesweeper
             flagLabel.Content = "Flags: ";
             flagLabel.Width = 100;
             flagLabel.Height = 50;
-            flagLabel.Margin = new Thickness(10);
+            flagLabel.FontSize = 16;
+            flagLabel.VerticalContentAlignment = VerticalAlignment.Bottom;
+            flagLabel.HorizontalContentAlignment = HorizontalAlignment.Left;
+            flagLabel.Margin = new Thickness(10, 0, 10, 0);
             flagLabel.Foreground = new SolidColorBrush(Colors.White);
-            flagLabel.Background = new SolidColorBrush(Colors.Black);
+            flagLabel.Background = new SolidColorBrush(Colors.DarkOliveGreen);
 
             //Add Flag Counter Label to statusGrid
             Grid.SetColumn(flagLabel, 0);
