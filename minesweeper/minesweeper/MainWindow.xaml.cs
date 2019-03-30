@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using System.Timers;
+using System.Windows.Threading;
 
 namespace minesweeper
 {
@@ -31,12 +33,19 @@ namespace minesweeper
 
         private IEnumerable<Control> controls;
 
+        public DispatcherTimer clock;
+
+        public DateTime StartTime;
+
         public MainWindow()
         {
             InitializeComponent();
-            RowDefinition row1 = new RowDefinition();
-            row1.Height = new GridLength();
 
+            // Setup timer (clock)
+            clock = new DispatcherTimer();
+            clock.Tick += timer;
+            clock.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            StartTime = DateTime.Now;
         }
 
         //pattern for numbers only
@@ -52,7 +61,6 @@ namespace minesweeper
 
         private static bool IsTextAllowed(string text)
         {
-
             return !_regex.IsMatch(text);
         }
 
@@ -121,7 +129,6 @@ namespace minesweeper
             //controls = FindVisualChildren<Control>(Application.Current.MainWindow);
         }
 
-
         //This is the click event of the dynamic event handler
         void btn_click(object sender, EventArgs e)
         {
@@ -167,11 +174,11 @@ namespace minesweeper
                 {
                     if (game.FlagCounter == 0)
                     {
-                        l.Content = "Flags: ";
+                        l.Content = "   Flags: ";
                     }
                     else
                     {
-                        l.Content = "Flags: " + game.FlagCounter.ToString();
+                        l.Content = "   Flags: " + game.FlagCounter.ToString();
                     }
 
                     break;
@@ -380,11 +387,14 @@ namespace minesweeper
             //Add the gameboard
             windowGrid.Children.Add(gameBoard);
 
-
             //adding the dynamic grid to the mainwindow
             Content = windowGrid;
 
             controls = FindVisualChildren<Control>(Application.Current.MainWindow);
+
+            // Game StartTime
+            StartTime = DateTime.Now;
+            clock.Start();
         }
 
         public Grid StatusBar()
@@ -420,23 +430,58 @@ namespace minesweeper
             // Create Flag Counter Label
             Label flagLabel = new Label();
             flagLabel.Name = "FlagCounter";
-            flagLabel.Content = "Flags: ";
+            flagLabel.Content = "   Flags: ";
             flagLabel.Width = 100;
             flagLabel.Height = 50;
             flagLabel.FontSize = 16;
             flagLabel.VerticalContentAlignment = VerticalAlignment.Bottom;
             flagLabel.HorizontalContentAlignment = HorizontalAlignment.Left;
             flagLabel.Margin = new Thickness(10, 0, 10, 0);
-            flagLabel.Foreground = new SolidColorBrush(Colors.White);
-            flagLabel.Background = new SolidColorBrush(Colors.DarkOliveGreen);
+            flagLabel.Foreground = new SolidColorBrush(Colors.DarkOliveGreen);
+            flagLabel.Background = new SolidColorBrush(Colors.White);
+            flagLabel.BorderBrush = new SolidColorBrush(Colors.Black);
+
 
             //Add Flag Counter Label to statusGrid
             Grid.SetColumn(flagLabel, 0);
             Grid.SetRow(flagLabel, 0);
             statusGrid.Children.Add(flagLabel);
 
+            // Create label to display timer
+            Label timerLabel = new Label();
+            timerLabel.Name = "Timer";
+            timerLabel.Content = "00:00:00";
+            timerLabel.Width = 100;
+            timerLabel.Height = 50;
+            timerLabel.FontSize = 16;
+            timerLabel.VerticalContentAlignment = VerticalAlignment.Bottom;
+            timerLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
+            timerLabel.Margin = new Thickness(10, 0, 10, 0);
+            timerLabel.Foreground = new SolidColorBrush(Colors.DarkOliveGreen);
+            timerLabel.Background = new SolidColorBrush(Colors.White);
+            timerLabel.BorderBrush = new SolidColorBrush(Colors.Black);
+
+            //Add timer label to statusGrid
+            Grid.SetColumn(timerLabel, 2);
+            Grid.SetRow(timerLabel, 0);
+            statusGrid.Children.Add(timerLabel);
+
             //Return Grid
             return statusGrid;
+        }
+
+        private void timer(object sender, EventArgs e)
+        {
+            foreach (Label l in controls.OfType<Label>())
+            {
+                if (l.Name == "Timer")
+                {
+                    TimeSpan elapsed = DateTime.Now - StartTime;
+                    DateTime x = new DateTime().Add(elapsed);
+                    l.Content = x.ToString("HH:mm:ss");
+                    break;
+                }
+            }
         }
     }
 }
