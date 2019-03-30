@@ -14,6 +14,9 @@ namespace minesweeper
         // the location y coordinate
         private int yLocation;
 
+        // whether the spread function has checked the cell
+        private bool tagged;
+
         // whether the cell is flagged
         private bool flagged;
 
@@ -48,6 +51,12 @@ namespace minesweeper
             get { return yLocation; }
         }
 
+        // public property of tagged
+        public bool Tagged
+        {
+            get { return tagged; }
+            set { tagged = value; }
+        }
         // public property of flagged
         public bool Flagged
         {

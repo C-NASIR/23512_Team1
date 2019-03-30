@@ -23,6 +23,8 @@ namespace minesweeper
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Grid gameGrid = new Grid();
+
         public const int BOXSIZE = 25;
 
         private GameLogic game;
@@ -32,6 +34,9 @@ namespace minesweeper
         public MainWindow()
         {
             InitializeComponent();
+            RowDefinition row1 = new RowDefinition();
+            row1.Height = new GridLength();
+
         }
 
         //pattern for numbers only
@@ -54,7 +59,7 @@ namespace minesweeper
         /// <summary>
         /// This Method Creates Dynamic Grid by using the number of rows and columns the user entered
         /// </summary>
-        public  void DynamicGridCreator(int numrows, int numColumns)
+        public  Grid DynamicGridCreator(int numrows, int numColumns)
         {
             //initiating the new dynamic grid: giving some values and setting some properties
             Grid dynamicGrid = new Grid();
@@ -94,15 +99,26 @@ namespace minesweeper
 
                     //Creating the event signature
                     btn.Click += new RoutedEventHandler(btn_click);
+                    // TODO: dynamically assign the right-click event
+                    btn.MouseRightButtonDown += new MouseButtonEventHandler(btn_rightClick);
                     Grid.SetColumn(btn, x);
                     Grid.SetRow(btn, y);
                     dynamicGrid.Children.Add(btn);
                 }            
             }
-            //adding the dynamic grid to the mainwindow
-            Content = dynamicGrid;
+            // add flag label to grid
+            Label flagLabel = new Label();
+            flagLabel.Content = "Flags: ";
+            flagLabel.Width = 100;
+            flagLabel.Height = 50;
+            flagLabel.Margin = new Thickness(10);
+            flagLabel.Foreground = new SolidColorBrush(Colors.White);
+            flagLabel.Background = new SolidColorBrush(Colors.Black);
+            
+            //send dynamicGrid to the window to add to the window Grid
+            return dynamicGrid;
 
-            controls = FindVisualChildren<Control>(Application.Current.MainWindow);
+            //controls = FindVisualChildren<Control>(Application.Current.MainWindow);
         }
 
 
@@ -111,7 +127,7 @@ namespace minesweeper
         {
             Button s = sender as Button;
             List<string> cells = game.ButtonLeftClicked(s.Name);
-
+            s.IsEnabled = false;
             foreach (string n in cells)
             {
                 int cellLocationX;
@@ -128,6 +144,37 @@ namespace minesweeper
                         //visual inset change
                         break;
                     }
+                }
+            }
+        }
+
+        //This is the click event of the dynamic event handler
+        void btn_rightClick(object sender, EventArgs e)
+        {
+            Button s = sender as Button;
+            s.Content = game.ButtonRightClicked(s.Name);
+            if (s.Content == "F")
+            {
+                s.Click -= btn_click;
+            }
+            else
+            {
+                s.Click += btn_click;
+            }
+            foreach (Label l in controls.OfType<Label>())
+            {
+                if (l.Name == "FlagCounter")
+                {
+                    if (game.FlagCounter == 0)
+                    {
+                        l.Name = "Flags: ";
+                    }
+                    else
+                    {
+                        l.Name = "Flags: " + game.FlagCounter.ToString();
+                    }
+
+                    break;
                 }
             }
         }
@@ -260,9 +307,9 @@ namespace minesweeper
                     if (int.TryParse(numMines, out numMine))
                     {
                         //Calling the dynamic grid creator method
-                        DynamicGridCreator(x, y);
+                        //DynamicGridCreator(x, y);
+                        Window(x,y);
                         checker = true;
-
                     }
                     else
                     {
@@ -282,6 +329,98 @@ namespace minesweeper
             }
 
             return checker;
+        }
+
+        public void Window(int x, int y)
+        {
+            //Create the Window Base Grid
+            Grid windowGrid = new Grid();
+            windowGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            windowGrid.VerticalAlignment = VerticalAlignment.Center;
+            windowGrid.ShowGridLines = true;
+            windowGrid.Background = new SolidColorBrush(Colors.AntiqueWhite);
+
+            //Define the number of columns in the window (1) at the width of the window
+            ColumnDefinition column = new ColumnDefinition();
+            column.Width = new GridLength(this.Width);
+            windowGrid.ColumnDefinitions.Add(column);
+
+            //Define the number of rows in the window (2) 
+            //First row at height of the status bar (to be defined next)
+            RowDefinition row1 = new RowDefinition();
+            row1.Height = new GridLength(50);
+            windowGrid.RowDefinitions.Add(row1);
+
+            //Second row to fill the remainder of the window height
+            RowDefinition row2 = new RowDefinition();
+            row2.Height = new GridLength(this.Height - 50);
+            windowGrid.RowDefinitions.Add(row2);
+
+            //Create the  statusStrip grid
+            Grid statusStrip = StatusBar();
+
+            //Create the gameboard grid
+            Grid gameBoard = DynamicGridCreator(x, y);
+
+            //Define the window grid content column and row content
+            Grid.SetColumn(statusStrip, 0);
+            Grid.SetRow(statusStrip, 0);
+            Grid.SetColumn(gameBoard, 0);
+            Grid.SetRow(gameBoard, 1);
+
+            //Add the gameboard
+            windowGrid.Children.Add(gameBoard);
+
+
+            //adding the dynamic grid to the mainwindow
+            Content = windowGrid;
+
+            controls = FindVisualChildren<Control>(Application.Current.MainWindow);
+        }
+
+        public Grid StatusBar()
+        {
+            //Create the status strip grid
+            Grid statusGrid = new Grid();
+            statusGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            statusGrid.VerticalAlignment = VerticalAlignment.Center;
+            statusGrid.ShowGridLines = true;
+            statusGrid.Background = new SolidColorBrush(Colors.Black);
+
+            //Define the number of columns in the window (3)
+            //First column = 2/5ths of window
+            ColumnDefinition status1 = new ColumnDefinition();
+            status1.Width = new GridLength((this.Width / 5) * 2);
+            statusGrid.ColumnDefinitions.Add(status1);
+
+            //Second column = 1/5th of window
+            ColumnDefinition status2 = new ColumnDefinition();
+            status2.Width = new GridLength(this.Width / 5);
+            statusGrid.ColumnDefinitions.Add(status2);
+
+            //Third column = 2/5ths of window
+            ColumnDefinition status3 = new ColumnDefinition();
+            status3.Width = new GridLength((this.Width / 5) * 2);
+            statusGrid.ColumnDefinitions.Add(status3);
+
+
+            // Create Flag Counter Label
+            Label flagLabel = new Label();
+            flagLabel.Name = "FlagCounter";
+            flagLabel.Content = "Flags: ";
+            flagLabel.Width = 100;
+            flagLabel.Height = 50;
+            flagLabel.Margin = new Thickness(10);
+            flagLabel.Foreground = new SolidColorBrush(Colors.White);
+            flagLabel.Background = new SolidColorBrush(Colors.Black);
+
+            //Add Flag Counter Label to statusGrid
+            Grid.SetColumn(flagLabel, 0);
+            Grid.SetRow(flagLabel, 0);
+            statusGrid.Children.Add(flagLabel);
+
+            //Return Grid
+            return statusGrid;
         }
     }
 }

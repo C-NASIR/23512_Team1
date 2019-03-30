@@ -17,19 +17,56 @@ namespace minesweeper
         // instantiate the MineField
         private MineField game;
 
+        private int flagCounter = 0;
+
         // public property of minefield
         public MineField Game
         {
             get { return game; }
         }
 
-        //GameLogic constractor
+        public int FlagCounter
+        {
+            get { return flagCounter; }
+            set { flagCounter = value; }
+        }
+
+        //GameLogic constructor
         public GameLogic(int y, int x, int numMine)
         {
             //creating the minefield
              game =  new MineField(x,y,numMine);
         }
 
+        // On Right-clock, parses button name, read flagged status of cell in array at specified location,
+        // toggles flag status in cell, returns "F" if flagged, "" if un-flagged
+        public string ButtonRightClicked(string btnName)
+        {
+            string displayValue = "";
+            int cellLocationX;
+            int cellLocationY;
+            string[] name = btnName.Split('_');
+            int.TryParse(name[1], out cellLocationY);   //switch this y and x where we parse
+            int.TryParse(name[2], out cellLocationX);
+            Cell chosenCell = game.Cells[cellLocationY, cellLocationX];
+
+            if (chosenCell.Flagged == false)
+            {
+                chosenCell.Flagged = true;
+                FlagCounter++;
+                displayValue = "F";
+            }
+            else
+            {
+                chosenCell.Flagged = false;
+                FlagCounter--;
+            }
+
+            return displayValue;
+        }
+
+        // On Left-click, parses button name, read cell value in array at specified location
+        // calls spread function as necessary and returns a string of cell locations to affect on the UI
         public List<string> ButtonLeftClicked(string btnName)
         {
 
@@ -43,7 +80,7 @@ namespace minesweeper
             Cell chosenCell = game.Cells[cellLocationY, cellLocationX];
             if (chosenCell.CellValue == 0)
             {
-                chosenCell.CellValue = -1;
+                chosenCell.Tagged = true;
                 //run spread function
                 stringCells = Spread(chosenCell);
 
@@ -61,16 +98,19 @@ namespace minesweeper
             return stringCells;
         }
 
+        // Takes clicked cell location and recursively searches for first cell with a value other than 0, 
+        // continues search until hits an edge of the board or a value other than 0
         public List<string> Spread(Cell cell)
         {
             //returned list of cells to be displayed
             List<string> returnedCells = new List<string>();
 
-            if (cell.YLocation - 1 >= 0 && cell.XLocation - 1 >= 0)
+            if ((cell.YLocation - 1 >= 0 && cell.XLocation - 1 >= 0)
+                &&(game.Cells[cell.YLocation - 1, cell.XLocation - 1].Tagged == false))
             {
                 if (game.Cells[cell.YLocation - 1, cell.XLocation - 1].CellValue == 0)
                 {
-                    game.Cells[cell.YLocation - 1, cell.XLocation - 1].CellValue = -1;
+                    game.Cells[cell.YLocation - 1, cell.XLocation - 1].Tagged = true;
                     returnedCells = returnedCells.Union(Spread(game.Cells[cell.YLocation - 1, cell.XLocation - 1]))
                          .OrderBy(x => x)
                          .ToList();
@@ -81,11 +121,12 @@ namespace minesweeper
                                       "_" + game.Cells[cell.YLocation - 1, cell.XLocation - 1].XLocation.ToString());
                 }
             }
-            if (cell.XLocation - 1 >= 0)
+            if ((cell.XLocation - 1 >= 0)
+                &&(game.Cells[cell.YLocation, cell.XLocation - 1].Tagged == false))
             {
                 if (game.Cells[cell.YLocation, cell.XLocation - 1].CellValue == 0)
                 {
-                    game.Cells[cell.YLocation, cell.XLocation - 1].CellValue = -1;
+                    game.Cells[cell.YLocation, cell.XLocation - 1].Tagged = true;
                     returnedCells = returnedCells.Union(Spread(game.Cells[cell.YLocation, cell.XLocation - 1]))
                          .OrderBy(x => x)
                          .ToList();
@@ -96,11 +137,12 @@ namespace minesweeper
                                       "_" + game.Cells[cell.YLocation, cell.XLocation - 1].XLocation.ToString());
                 }
             }
-            if (cell.YLocation + 1 < game.Height && cell.XLocation - 1 >= 0)
+            if ((cell.YLocation + 1 < game.Height && cell.XLocation - 1 >= 0)
+                &&(game.Cells[cell.YLocation + 1, cell.XLocation - 1].Tagged == false))
             {
                 if (game.Cells[cell.YLocation + 1, cell.XLocation - 1].CellValue == 0)
                 {
-                    game.Cells[cell.YLocation + 1, cell.XLocation - 1].CellValue = -1;
+                    game.Cells[cell.YLocation + 1, cell.XLocation - 1].Tagged = true;
                     returnedCells = returnedCells.Union(Spread(game.Cells[cell.YLocation + 1, cell.XLocation - 1]))
                          .OrderBy(x => x)
                          .ToList();
@@ -111,11 +153,12 @@ namespace minesweeper
                                       "_" + game.Cells[cell.YLocation + 1, cell.XLocation - 1].XLocation.ToString());
                 }
             }
-            if (cell.YLocation - 1 >= 0)
+            if ((cell.YLocation - 1 >= 0)
+                &&(game.Cells[cell.YLocation - 1, cell.XLocation].Tagged == false))
             {
                 if (game.Cells[cell.YLocation - 1, cell.XLocation].CellValue == 0)
                 {
-                    game.Cells[cell.YLocation - 1, cell.XLocation].CellValue = -1;
+                    game.Cells[cell.YLocation - 1, cell.XLocation].Tagged = true;
                     returnedCells = returnedCells.Union(Spread(game.Cells[cell.YLocation - 1, cell.XLocation]))
                          .OrderBy(x => x)
                          .ToList();
@@ -126,11 +169,12 @@ namespace minesweeper
                                       "_" + game.Cells[cell.YLocation - 1, cell.XLocation].XLocation.ToString());
                 }
             }
-            if (cell.YLocation + 1 < game.Height)
+            if ((cell.YLocation + 1 < game.Height)
+                &&(game.Cells[cell.YLocation + 1, cell.XLocation].Tagged == false))
             {
                 if (game.Cells[cell.YLocation + 1, cell.XLocation].CellValue == 0)
                 {
-                    game.Cells[cell.YLocation + 1, cell.XLocation].CellValue = -1;
+                    game.Cells[cell.YLocation + 1, cell.XLocation].Tagged = true;
                     returnedCells = returnedCells.Union(Spread(game.Cells[cell.YLocation + 1, cell.XLocation]))
                          .OrderBy(x => x)
                          .ToList();
@@ -141,11 +185,12 @@ namespace minesweeper
                                       "_" + game.Cells[cell.YLocation + 1, cell.XLocation].XLocation.ToString());
                 }
             }
-            if (cell.YLocation - 1 >= 0 && cell.XLocation + 1 < game.Width)
+            if ((cell.YLocation - 1 >= 0 && cell.XLocation + 1 < game.Width)
+                &&(game.Cells[cell.YLocation - 1, cell.XLocation + 1].Tagged == false))
             {
                 if (game.Cells[cell.YLocation - 1, cell.XLocation + 1].CellValue == 0)
                 {
-                    game.Cells[cell.YLocation - 1, cell.XLocation + 1].CellValue = -1;
+                    game.Cells[cell.YLocation - 1, cell.XLocation + 1].Tagged = true;
                     returnedCells = returnedCells.Union(Spread(game.Cells[cell.YLocation - 1, cell.XLocation + 1]))
                          .OrderBy(x => x)
                          .ToList();
@@ -156,11 +201,12 @@ namespace minesweeper
                                       "_" + game.Cells[cell.YLocation - 1, cell.XLocation + 1].XLocation.ToString());
                 }
             }
-            if (cell.XLocation + 1 < game.Width)
+            if ((cell.XLocation + 1 < game.Width)
+                &&(game.Cells[cell.YLocation, cell.XLocation + 1].Tagged == false))
             {
                 if (game.Cells[cell.YLocation, cell.XLocation + 1].CellValue == 0)
                 {
-                    game.Cells[cell.YLocation, cell.XLocation + 1].CellValue = -1;
+                    game.Cells[cell.YLocation, cell.XLocation + 1].Tagged = true;
                     returnedCells = returnedCells.Union(Spread(game.Cells[cell.YLocation, cell.XLocation + 1]))
                          .OrderBy(x => x)
                          .ToList();
@@ -171,11 +217,12 @@ namespace minesweeper
                                       "_" + game.Cells[cell.YLocation, cell.XLocation + 1].XLocation.ToString());
                 }
             }
-            if (cell.YLocation + 1 < game.Height && cell.XLocation + 1 < game.Width)
+            if ((cell.YLocation + 1 < game.Height && cell.XLocation + 1 < game.Width)
+                &&(game.Cells[cell.YLocation + 1, cell.XLocation + 1].Tagged == false))
             {
                 if (game.Cells[cell.YLocation + 1, cell.XLocation + 1].CellValue == 0)
                 {
-                    game.Cells[cell.YLocation + 1, cell.XLocation + 1].CellValue = -1;
+                    game.Cells[cell.YLocation + 1, cell.XLocation + 1].Tagged = true;
                     returnedCells = returnedCells.Union(Spread(game.Cells[cell.YLocation + 1, cell.XLocation + 1]))
                          .OrderBy(x => x)
                          .ToList();
