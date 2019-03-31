@@ -108,7 +108,7 @@ namespace minesweeper
                     //Creating the event signature
                     btn.Click += new RoutedEventHandler(btn_click);
                     // TODO: dynamically assign the right-click event
-                    btn.MouseRightButtonDown += new MouseButtonEventHandler(btn_rightClick);
+                    btn.MouseRightButtonDown += new MouseButtonEventHandler(btn_rightClick);   
                     Grid.SetColumn(btn, x);
                     Grid.SetRow(btn, y);
                     dynamicGrid.Children.Add(btn);
@@ -133,22 +133,28 @@ namespace minesweeper
         void btn_click(object sender, EventArgs e)
         {
             Button s = sender as Button;
+
+          
             List<string> cells = game.ButtonLeftClicked(s.Name);
-            s.IsEnabled = false;
+
             foreach (string n in cells)
             {
+
                 int cellLocationX;
                 int cellLocationY;
                 string[] btnName = n.Split('_');
                 int.TryParse(btnName[0], out cellLocationY);
                 int.TryParse(btnName[1], out cellLocationX);
-
+                
                 foreach (Button b in controls.OfType<Button>())
                 {
                     if (b.Name == "btn_" + cellLocationY + "_" + cellLocationX)
                     {
+                        //b.Click -= btn_click;
+                        //b.MouseRightButtonDown -= btn_rightClick;
                         b.Content = game.Game.Cells[cellLocationY, cellLocationX].CellDisplayValue;
                         AnimationBTN(b);
+                        b.IsEnabled = false;
                         break;
                     }
                 }
@@ -160,7 +166,7 @@ namespace minesweeper
         {
             Button s = sender as Button;
             s.Content = game.ButtonRightClicked(s.Name);
-            if (s.Content == "F")
+            if ((string)s.Content == "F")
             {
                 s.Click -= btn_click;
             }
@@ -178,7 +184,7 @@ namespace minesweeper
                     }
                     else
                     {
-                        l.Content = "   Flags: " + game.FlagCounter.ToString();
+                        l.Content = "   Flags: " + game.FlagCounter;
                     }
 
                     break;

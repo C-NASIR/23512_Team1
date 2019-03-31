@@ -81,9 +81,10 @@ namespace minesweeper
             if (chosenCell.CellValue == 0)
             {
                 chosenCell.Tagged = true;
+                
                 //run spread function
                 stringCells = Spread(chosenCell);
-
+                stringCells.Add(chosenCell.YLocation + "_" + chosenCell.XLocation.ToString());
             }
             else if (chosenCell.CellValue == 9)
             {
@@ -115,7 +116,7 @@ namespace minesweeper
                          .OrderBy(x => x)
                          .ToList();
                 }
-                else if(game.Cells[cell.YLocation - 1, cell.XLocation - 1].CellValue != 9)
+                if(game.Cells[cell.YLocation - 1, cell.XLocation - 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation - 1, cell.XLocation - 1].YLocation +
                                       "_" + game.Cells[cell.YLocation - 1, cell.XLocation - 1].XLocation.ToString());
@@ -131,7 +132,7 @@ namespace minesweeper
                          .OrderBy(x => x)
                          .ToList();
                 }
-                else if (game.Cells[cell.YLocation, cell.XLocation - 1].CellValue != 9)
+                if (game.Cells[cell.YLocation, cell.XLocation - 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation, cell.XLocation - 1].YLocation +
                                       "_" + game.Cells[cell.YLocation, cell.XLocation - 1].XLocation.ToString());
@@ -147,7 +148,7 @@ namespace minesweeper
                          .OrderBy(x => x)
                          .ToList();
                 }
-                else if (game.Cells[cell.YLocation + 1, cell.XLocation - 1].CellValue != 9)
+                if (game.Cells[cell.YLocation + 1, cell.XLocation - 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation + 1, cell.XLocation - 1].YLocation +
                                       "_" + game.Cells[cell.YLocation + 1, cell.XLocation - 1].XLocation.ToString());
@@ -163,7 +164,7 @@ namespace minesweeper
                          .OrderBy(x => x)
                          .ToList();
                 }
-                else if (game.Cells[cell.YLocation - 1, cell.XLocation].CellValue != 9)
+                if (game.Cells[cell.YLocation - 1, cell.XLocation].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation - 1, cell.XLocation].YLocation +
                                       "_" + game.Cells[cell.YLocation - 1, cell.XLocation].XLocation.ToString());
@@ -179,7 +180,7 @@ namespace minesweeper
                          .OrderBy(x => x)
                          .ToList();
                 }
-                else if (game.Cells[cell.YLocation + 1, cell.XLocation].CellValue != 9)
+                if (game.Cells[cell.YLocation + 1, cell.XLocation].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation + 1, cell.XLocation].YLocation +
                                       "_" + game.Cells[cell.YLocation + 1, cell.XLocation].XLocation.ToString());
@@ -195,7 +196,7 @@ namespace minesweeper
                          .OrderBy(x => x)
                          .ToList();
                 }
-                else if (game.Cells[cell.YLocation - 1, cell.XLocation + 1].CellValue != 9)
+                if (game.Cells[cell.YLocation - 1, cell.XLocation + 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation - 1, cell.XLocation + 1].YLocation +
                                       "_" + game.Cells[cell.YLocation - 1, cell.XLocation + 1].XLocation.ToString());
@@ -211,7 +212,7 @@ namespace minesweeper
                          .OrderBy(x => x)
                          .ToList();
                 }
-                else if (game.Cells[cell.YLocation, cell.XLocation + 1].CellValue != 9)
+                if (game.Cells[cell.YLocation, cell.XLocation + 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation, cell.XLocation + 1].YLocation +
                                       "_" + game.Cells[cell.YLocation, cell.XLocation + 1].XLocation.ToString());
@@ -227,7 +228,7 @@ namespace minesweeper
                          .OrderBy(x => x)
                          .ToList();
                 }
-                else if (game.Cells[cell.YLocation + 1, cell.XLocation + 1].CellValue != 9)
+                if (game.Cells[cell.YLocation + 1, cell.XLocation + 1].CellValue != 9)
                 {
                     returnedCells.Add(game.Cells[cell.YLocation + 1, cell.XLocation + 1].YLocation +
                                       "_" + game.Cells[cell.YLocation + 1, cell.XLocation + 1].XLocation.ToString());
