@@ -27,7 +27,7 @@ namespace minesweeper
     {
         public Grid gameGrid = new Grid();
 
-        public const int BOXSIZE = 25;
+        public const int BOXSIZE = 40;
 
         private GameLogic game;
 
@@ -107,7 +107,6 @@ namespace minesweeper
 
                     //Creating the event signature
                     btn.Click += new RoutedEventHandler(btn_click);
-                    // TODO: dynamically assign the right-click event
                     btn.MouseRightButtonDown += new MouseButtonEventHandler(btn_rightClick);   
                     Grid.SetColumn(btn, x);
                     Grid.SetRow(btn, y);

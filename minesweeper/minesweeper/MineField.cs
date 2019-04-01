@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace minesweeper
 {
@@ -83,7 +84,7 @@ namespace minesweeper
 
             else
             {
-                //MessageBox.Show("The number of mines can make up no more than \n one third of the available cells.");
+                MessageBox.Show("The number of mines can make up no more than \n one third of the available cells.");
             }
         }
 
