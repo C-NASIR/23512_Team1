@@ -17,6 +17,9 @@ using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.Timers;
 using System.Windows.Threading;
+using System.Globalization;
+using System.Drawing;
+using System.IO;
 
 namespace minesweeper
 {
@@ -55,6 +58,15 @@ namespace minesweeper
         public int game_height;
         public int game_width;
         public int game_bombs;
+        public int win_score;
+
+        public string maxScore
+        {
+            get { return txtBombs.Text; }
+            set { txtBombs.Text = value; }
+        }
+
+        public int current_score;
 
         //max bombs set to 1/3 of board size
         public int max_bombs;
@@ -165,6 +177,7 @@ namespace minesweeper
         {
             Button s = sender as Button;
             s.Content = game.ButtonRightClicked(s.Name);
+
             if ((string)s.Content == "F")
             {
                 s.Click -= btn_click;
@@ -190,6 +203,7 @@ namespace minesweeper
                 }
             }
         }
+
 
         //Find all controls in the window
         public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
@@ -291,7 +305,7 @@ namespace minesweeper
         //Button Animation method
         private void AnimationBTN(Button b)
         {
-            b.Background = Brushes.Yellow;
+            b.Background = System.Windows.Media.Brushes.Yellow;
         }
 
         //Removes label text from txtBox as user selects it
@@ -432,6 +446,7 @@ namespace minesweeper
             row1.Height = new GridLength(50);
             statusGrid.RowDefinitions.Add(row1);
 
+
             // Create Flag Counter Label
             Label flagLabel = new Label();
             flagLabel.Name = "FlagCounter";
@@ -475,6 +490,67 @@ namespace minesweeper
             return statusGrid;
         }
 
+        //Possible way to add navigation menu to game board
+        /**
+        public Grid NavigationGrid()
+        {
+            Grid navigationGrid = new Grid();
+            navigationGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            navigationGrid.VerticalAlignment = VerticalAlignment.Center;
+            navigationGrid.ShowGridLines = true;
+            navigationGrid.Background = new VisualBrush();
+
+            ColumnDefinition navigation1 = new ColumnDefinition();
+            navigation1.Width = new GridLength((this.Width / 5) * 2);
+            navigationGrid.ColumnDefinitions.Add(navigation1);
+
+            ColumnDefinition navigation2 = new ColumnDefinition();
+            navigation2.Width = new GridLength(this.Width / 5);
+            navigationGrid.ColumnDefinitions.Add(navigation2);
+
+            ColumnDefinition navigation3 = new ColumnDefinition();
+            navigation3.Width = new GridLength((this.Width / 5) * 2);
+            navigationGrid.ColumnDefinitions.Add(navigation3);
+
+            RowDefinition navRow1 = new RowDefinition();
+            navRow1.Height = new GridLength(25);
+            navigationGrid.RowDefinitions.Add(navRow1);
+
+            //Add navigation menu
+            StackPanel navigationStack = new StackPanel();
+            navigationStack.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            navigationStack.Height = 100;
+            navigationStack.Width = 100;
+            navigationStack.Margin = new Thickness(10, 0, 0, 0);
+            navigationStack.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+
+
+            Button navigationMenu = new Button();
+            navigationMenu.Height = 29;
+            navigationMenu.Name = "Restart";
+
+
+            MenuItem newGameItem = new MenuItem();
+            //newGameItem.Click += newGame_Click;
+
+            Grid.SetColumn(navigationStack, 1);
+            Grid.SetRow(navigationStack, 0);
+            navigationStack.Children.Add(navigationMenu);
+            navigationGrid.Children.Add(navigationStack);
+
+            Grid.SetColumn(navigationMenu, 1);
+            Grid.SetRow(navigationMenu, 0);
+
+
+            Grid.SetColumn(newGameItem, 1);
+            Grid.SetRow(newGameItem, 0);
+            navigationGrid.Children.Add(newGameItem);
+
+            return navigationGrid;
+
+        }
+        **/
+
         private void timer(object sender, EventArgs e)
         {
             foreach (Label l in controls.OfType<Label>())
@@ -488,5 +564,52 @@ namespace minesweeper
                 }
             }
         }
+
+        /// <summary>
+        /// Start application over via navigation menu
+        /// </summary>
+        private void newGame_Click(object sender, RoutedEventArgs e)
+        {
+            //close grid and show start menu again, right now simply closes application and reopens
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
+        }
+
+        /// <summary>
+        /// Close the game via navigation menu
+        /// </summary>
+        private void closeGame_Click(object sender, RoutedEventArgs e)
+        {
+            //close application
+            Application.Current.Shutdown();
+        }
+
+        /// <summary>
+        /// Capture screenshots via navigation menu
+        /// Uses bitmap to take screenshot
+        /// </summary>
+        private void screenCapture_Click(object sender, RoutedEventArgs e)
+        {
+            double screenLeft = SystemParameters.VirtualScreenLeft;
+            double screenTop = SystemParameters.VirtualScreenTop;
+            double screenWidth = SystemParameters.VirtualScreenWidth;
+            double screenHeight = SystemParameters.VirtualScreenHeight;
+
+            using (Bitmap bmp = new Bitmap((int)screenWidth,
+                (int)screenHeight))
+            {
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    String filename = "ScreenCapture-" + DateTime.Now.ToString("ddMMyyyy-hhmmss") + ".png";
+                    string screenPath = AppDomain.CurrentDomain.BaseDirectory + "\\images" + "\\" + filename;
+                    Opacity = .0;
+                    g.CopyFromScreen((int)screenLeft, (int)screenTop, 0, 0, bmp.Size);
+                    bmp.Save(screenPath);
+                    Opacity = 1;
+                }
+
+            }
+        }
+
     }
 }

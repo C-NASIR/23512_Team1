@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using minesweeper;
+using System.Windows.Input;
 
 namespace minesweeper
 {
@@ -16,6 +17,23 @@ namespace minesweeper
 
         // instantiate the MineField
         private MineField game;
+
+        //string for sound filepath
+        string lossPath = Environment.CurrentDirectory + "\\sounds" + "\\boom.wav";
+        string victoryPath = Environment.CurrentDirectory + "\\sounds" + "\\victory.wav";
+
+
+        //boolean for game over. True = win False = loss
+        public bool gameEnd;
+
+        //int for tracking scores
+        private int current_score = 0;
+
+        //set max score to number of bombs in play
+        private int max_score = int.Parse(((MainWindow)Application.Current.MainWindow).txtBombs.Text);
+
+        //set max number of flags player may use
+        private int maxFlags = int.Parse(((MainWindow)Application.Current.MainWindow).txtBombs.Text) + 2;
 
         private int flagCounter = 0;
 
@@ -40,6 +58,8 @@ namespace minesweeper
 
         // On Right-clock, parses button name, read flagged status of cell in array at specified location,
         // toggles flag status in cell, returns "F" if flagged, "" if un-flagged
+        // Tracks flags placed and stops user from using more than max
+        // If all bombs are flagged play victory sound and display score
         public string ButtonRightClicked(string btnName)
         {
             string displayValue = "";
@@ -50,17 +70,42 @@ namespace minesweeper
             int.TryParse(name[2], out cellLocationX);
             Cell chosenCell = game.Cells[cellLocationY, cellLocationX];
 
-            if (chosenCell.Flagged == false)
+
+            if (chosenCell.Flagged == false && flagCounter == maxFlags)
+            {
+                MessageBox.Show("Maximum number of flags placed.");
+            }
+            else if (chosenCell.Flagged == false && chosenCell.CellValue == 9)
+            {
+                current_score = current_score + 1;
+                chosenCell.Flagged = true;
+                FlagCounter++;
+                displayValue = "F";
+                if (current_score == max_score)
+                {
+                    MessageBox.Show("Victory! The final score was: " + (current_score * 10).ToString());
+                    
+                    //load and play victory sound
+                    System.Media.SoundPlayer victoryPlayer = new System.Media.SoundPlayer();
+                    victoryPlayer.SoundLocation = victoryPath;
+                    victoryPlayer.Load();
+                    victoryPlayer.Play();
+                }
+            }
+            else if (chosenCell.Flagged == false)
             {
                 chosenCell.Flagged = true;
                 FlagCounter++;
                 displayValue = "F";
+
             }
             else
             {
                 chosenCell.Flagged = false;
                 FlagCounter--;
             }
+
+
 
             return displayValue;
         }
@@ -90,6 +135,22 @@ namespace minesweeper
             {
                 //game over
                 stringCells.Add(chosenCell.YLocation + "_" + chosenCell.XLocation.ToString());
+
+                //load and play explosion sound
+                System.Media.SoundPlayer boomPlayer = new System.Media.SoundPlayer();
+                boomPlayer.SoundLocation = lossPath;
+                boomPlayer.Load();
+                boomPlayer.Play();
+
+                //message box for game over, set with MessageBoxResult for later use
+                MessageBoxResult gameOverMessage = MessageBox.Show("Game Over");
+
+                //close grid and show start menu again, right now simply closes application and reopens
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
+
+                //set game to lost
+                gameEnd = false;
             }
             else
             {
@@ -98,6 +159,7 @@ namespace minesweeper
 
             return stringCells;
         }
+
 
         // Takes clicked cell location and recursively searches for first cell with a value other than 0, 
         // continues search until hits an edge of the board or a value other than 0
