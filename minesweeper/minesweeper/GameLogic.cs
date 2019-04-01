@@ -66,10 +66,9 @@ namespace minesweeper
             int cellLocationX;
             int cellLocationY;
             string[] name = btnName.Split('_');
-            int.TryParse(name[1], out cellLocationY);   //switch this y and x where we parse
+            int.TryParse(name[1], out cellLocationY);   
             int.TryParse(name[2], out cellLocationX);
             Cell chosenCell = game.Cells[cellLocationY, cellLocationX];
-
 
             if (chosenCell.Flagged == false && flagCounter == maxFlags)
             {
@@ -86,10 +85,10 @@ namespace minesweeper
                     MessageBox.Show("Victory! The final score was: " + (current_score * 10).ToString());
                     
                     //load and play victory sound
-                    System.Media.SoundPlayer victoryPlayer = new System.Media.SoundPlayer();
-                    victoryPlayer.SoundLocation = victoryPath;
-                    victoryPlayer.Load();
-                    victoryPlayer.Play();
+                    //System.Media.SoundPlayer victoryPlayer = new System.Media.SoundPlayer();
+                    //victoryPlayer.SoundLocation = victoryPath;
+                    //victoryPlayer.Load();
+                    //victoryPlayer.Play();
                 }
             }
             else if (chosenCell.Flagged == false)
@@ -97,16 +96,12 @@ namespace minesweeper
                 chosenCell.Flagged = true;
                 FlagCounter++;
                 displayValue = "F";
-
             }
             else
             {
                 chosenCell.Flagged = false;
                 FlagCounter--;
             }
-
-
-
             return displayValue;
         }
 
@@ -120,7 +115,7 @@ namespace minesweeper
             int cellLocationX;
             int cellLocationY;
             string[] name = btnName.Split('_');
-            int.TryParse(name[1], out cellLocationY);   //switch this y and x where we parse
+            int.TryParse(name[1], out cellLocationY);   
             int.TryParse(name[2], out cellLocationX);
             Cell chosenCell = game.Cells[cellLocationY, cellLocationX];
             if (chosenCell.CellValue == 0)
@@ -136,11 +131,11 @@ namespace minesweeper
                 //game over
                 stringCells.Add(chosenCell.YLocation + "_" + chosenCell.XLocation.ToString());
 
-                //load and play explosion sound
-                System.Media.SoundPlayer boomPlayer = new System.Media.SoundPlayer();
-                boomPlayer.SoundLocation = lossPath;
-                boomPlayer.Load();
-                boomPlayer.Play();
+                ////load and play explosion sound
+                //System.Media.SoundPlayer boomPlayer = new System.Media.SoundPlayer();
+                //boomPlayer.SoundLocation = lossPath;
+                //boomPlayer.Load();
+                //boomPlayer.Play();
 
                 //message box for game over, set with MessageBoxResult for later use
                 MessageBoxResult gameOverMessage = MessageBox.Show("Game Over");
@@ -159,7 +154,6 @@ namespace minesweeper
 
             return stringCells;
         }
-
 
         // Takes clicked cell location and recursively searches for first cell with a value other than 0, 
         // continues search until hits an edge of the board or a value other than 0

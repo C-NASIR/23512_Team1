@@ -136,15 +136,12 @@ namespace minesweeper
             
             //send dynamicGrid to the window to add to the window Grid
             return dynamicGrid;
-
-            //controls = FindVisualChildren<Control>(Application.Current.MainWindow);
         }
 
         //This is the click event of the dynamic event handler
         void btn_click(object sender, EventArgs e)
         {
             Button s = sender as Button;
-
           
             List<string> cells = game.ButtonLeftClicked(s.Name);
 
@@ -164,7 +161,7 @@ namespace minesweeper
                         //b.Click -= btn_click;
                         //b.MouseRightButtonDown -= btn_rightClick;
                         b.Content = game.Game.Cells[cellLocationY, cellLocationX].CellDisplayValue;
-                        AnimationBTN(b);
+                        //AnimationBTN(b);
                         b.IsEnabled = false;
                         break;
                     }
@@ -302,11 +299,11 @@ namespace minesweeper
             }
         }
 
-        //Button Animation method
-        private void AnimationBTN(Button b)
-        {
-            b.Background = System.Windows.Media.Brushes.Yellow;
-        }
+        ////Button Animation method
+        //private void AnimationBTN(Button b)
+        //{
+        //    b.Background = System.Windows.Media.Brushes.Yellow;
+        //}
 
         //Removes label text from txtBox as user selects it
         private void txtHeight_GotFocus(object sender, RoutedEventArgs e)
@@ -325,6 +322,7 @@ namespace minesweeper
         {
             txtBombs.Text = "";
         }
+
         //Check the User input 
         public bool Inputchecker(string xNumber, string yNumber, string numMines)
         {
@@ -557,12 +555,16 @@ namespace minesweeper
             {
                 if (l.Name == "Timer")
                 {
-                    TimeSpan elapsed = DateTime.Now - StartTime;
-                    DateTime x = new DateTime().Add(elapsed);
-                    l.Content = x.ToString("HH:mm:ss");
+                    l.Content = getTime().ToString("HH:mm:ss");
                     break;
                 }
             }
+        }
+
+        public DateTime getTime()
+        {
+            TimeSpan elapsed = DateTime.Now - StartTime;
+            return new DateTime().Add(elapsed);
         }
 
         /// <summary>
@@ -607,9 +609,7 @@ namespace minesweeper
                     bmp.Save(screenPath);
                     Opacity = 1;
                 }
-
             }
         }
-
     }
 }
