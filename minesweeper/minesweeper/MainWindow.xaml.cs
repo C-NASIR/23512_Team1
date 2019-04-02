@@ -83,9 +83,10 @@ namespace minesweeper
         {
             //initiating the new dynamic grid: giving some values and setting some properties
             Grid dynamicGrid = new Grid();
+            dynamicGrid.Name = "gameBoard";
             dynamicGrid.HorizontalAlignment = HorizontalAlignment.Center;
             dynamicGrid.VerticalAlignment = VerticalAlignment.Center;
-            dynamicGrid.ShowGridLines = true;
+            dynamicGrid.ShowGridLines = false;
             dynamicGrid.Background = new SolidColorBrush(Colors.AntiqueWhite);
 
 
@@ -125,14 +126,7 @@ namespace minesweeper
                     dynamicGrid.Children.Add(btn);
                 }            
             }
-            // add flag label to grid
-            Label flagLabel = new Label();
-            flagLabel.Content = "Flags: ";
-            flagLabel.Width = 100;
-            flagLabel.Height = 50;
-            flagLabel.Margin = new Thickness(10);
-            flagLabel.Foreground = new SolidColorBrush(Colors.White);
-            flagLabel.Background = new SolidColorBrush(Colors.Black);
+
             
             //send dynamicGrid to the window to add to the window Grid
             return dynamicGrid;
@@ -367,7 +361,7 @@ namespace minesweeper
             Grid windowGrid = new Grid();
             windowGrid.HorizontalAlignment = HorizontalAlignment.Center;
             windowGrid.VerticalAlignment = VerticalAlignment.Center;
-            windowGrid.ShowGridLines = true;
+            windowGrid.ShowGridLines = false;
             windowGrid.Background = new SolidColorBrush(Colors.DarkOliveGreen);
 
             //Define the number of columns in the window (1) at the width of the window
@@ -383,9 +377,59 @@ namespace minesweeper
 
             //Second row to fill the remainder of the window height
             RowDefinition row2 = new RowDefinition();
-            row2.Height = new GridLength(this.Height - 50);
+            row2.Height = new GridLength(this.Height - 150);
             windowGrid.RowDefinitions.Add(row2);
 
+            //Third row for game over buttons
+            RowDefinition row3 = new RowDefinition();
+            row3.Height = new GridLength(100);
+            windowGrid.RowDefinitions.Add(row3);
+            
+            //Stackpanel for post game labels and buttons
+            StackPanel endGameStack = new StackPanel();
+            endGameStack.Width = this.Width;
+            endGameStack.Height = 400;
+         
+            //btn for replay in post game
+            Button btnReplay = new Button();
+            btnReplay.Click += newGame_Click;
+            btnReplay.Height = 25;
+            btnReplay.Width = 50;
+            btnReplay.Content = "Replay";
+            
+            //btn for closing game in post game
+            Button btnClose = new Button();
+            btnClose.Click += closeGame_Click;
+            btnClose.Height = 25;
+            btnClose.Width = 50;
+            btnClose.Content = "Close";
+
+            //lbl for displaying final score in post game
+            Label lblScore = new Label();
+            lblScore.Name = "scoreLabel";
+            lblScore.Content = current_score;
+            lblScore.Height = 30;
+            lblScore.Width = this.Width;
+            lblScore.HorizontalContentAlignment = HorizontalAlignment.Center;
+
+            //wrappanel for horizontaly aligning post game buttons
+            WrapPanel endGameWrap = new WrapPanel();
+            endGameWrap.HorizontalAlignment = HorizontalAlignment.Left;
+            endGameWrap.Height = 31;
+            endGameWrap.Width = 100;
+            endGameWrap.Margin = new Thickness((this.Width/2) - btnReplay.Width, 0, 0, 0);
+
+            //add controls to stackpanel
+            endGameStack.Children.Add(lblScore);
+            endGameWrap.Children.Add(btnReplay);
+            endGameWrap.Children.Add(btnClose);
+            endGameStack.Children.Add(endGameWrap);
+
+            //set column and row for endGameStack
+            Grid.SetColumn(endGameStack, 0);
+            Grid.SetRow(endGameStack, 2);
+            windowGrid.Children.Add(endGameStack);
+            
             //Create the  statusStrip grid
             Grid statusStrip = StatusBar();
 
@@ -420,7 +464,7 @@ namespace minesweeper
             Grid statusGrid = new Grid();
             statusGrid.HorizontalAlignment = HorizontalAlignment.Center;
             statusGrid.VerticalAlignment = VerticalAlignment.Center;
-            statusGrid.ShowGridLines = true;
+            statusGrid.ShowGridLines = false;
             statusGrid.Background = new VisualBrush();
 
             //Define the number of columns in the window (3)
@@ -465,6 +509,16 @@ namespace minesweeper
             Grid.SetRow(flagLabel, 0);
             statusGrid.Children.Add(flagLabel);
 
+            //btn for displaying post game menu
+            Button btnCheckScore = new Button();
+            btnCheckScore.Height = 25;
+            btnCheckScore.Width = 50;
+            //insert the happiest of faces
+
+            Grid.SetColumn(btnCheckScore, 1);
+            Grid.SetRow(btnCheckScore, 0);
+            statusGrid.Children.Add(btnCheckScore);
+
             // Create label to display timer
             Label timerLabel = new Label();
             timerLabel.Name = "Timer";
@@ -495,7 +549,7 @@ namespace minesweeper
             Grid navigationGrid = new Grid();
             navigationGrid.HorizontalAlignment = HorizontalAlignment.Center;
             navigationGrid.VerticalAlignment = VerticalAlignment.Center;
-            navigationGrid.ShowGridLines = true;
+            navigationGrid.ShowGridLines = false;
             navigationGrid.Background = new VisualBrush();
 
             ColumnDefinition navigation1 = new ColumnDefinition();

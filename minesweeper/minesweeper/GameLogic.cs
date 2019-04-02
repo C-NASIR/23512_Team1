@@ -97,6 +97,12 @@ namespace minesweeper
                 FlagCounter++;
                 displayValue = "F";
             }
+            else if (chosenCell.Flagged == true && chosenCell.CellValue == 9)
+            {
+                chosenCell.Flagged = false;
+                FlagCounter--;
+                current_score--;
+            }
             else
             {
                 chosenCell.Flagged = false;
