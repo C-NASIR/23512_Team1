@@ -1,2 +1,2 @@
 # The Game
-This is Joe.
+This is an amazing minesweeper game we are creating
