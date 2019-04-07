@@ -1,0 +1,49 @@
+﻿<Page x:Class="Minesweeper.Pages.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Minesweeper.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="300"
+      Title="LoginPage" MinHeight="470.52" MinWidth="750">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Images/Gridbackground.png" Stretch="Fill" />
+        </Grid.Background>
+        <TextBox x:Name="txtBoxClumns" TextAlignment="Center" Padding="0,13" Foreground="Gray" HorizontalAlignment="Left" Height="46" Margin="339,100,0,0" TextWrapping="Wrap" Text="Columns" VerticalAlignment="Top" Width="198" FontSize="18" FontFamily="SimSun-ExtB" GotFocus="txtBoxClumns_GotFocus" LostFocus="txtBoxClumns_LostFocus" TabIndex="1">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <TextBox x:Name="txtBoxRows" TextAlignment="Center" Padding="0,13" Foreground="Gray" HorizontalAlignment="Left" Height="46" Margin="339,175,0,0" TextWrapping="Wrap" Text="Rows" VerticalAlignment="Top" Width="198" FontSize="18" FontFamily="SimSun-ExtB" LostFocus="txtBoxRows_LostFocus" GotFocus="txtBoxRows_GotFocus" TabIndex="2">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <TextBox x:Name="txtBoxMines" TextAlignment="Center" Foreground="Gray" Padding="0,13" HorizontalAlignment="Left" Height="46" Margin="339,250,0,0" TextWrapping="Wrap" Text="Mines" VerticalAlignment="Top" Width="198" FontSize="18" FontFamily="SimSun-ExtB" GotFocus="txtBoxMines_GotFocus" LostFocus="txtBoxMines_LostFocus" TabIndex="3" >
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <TextBlock x:Name="txtBlockTitle" Foreground="GhostWhite"   HorizontalAlignment="Left" Margin="198,10,0,0" TextWrapping="Wrap" Padding="0,7" TextAlignment="Center" Text="Choose Your Grid" VerticalAlignment="Top" Width="489" Height="65" FontSize="36" FontFamily="Segoe WP Black" FontWeight="ExtraBlack" TextDecorations="Underline" FontStretch="ExtraCondensed"/>
+        <Button x:Name="btnSubmit" Content="SUBMIT" IsEnabled="False" Foreground="White" Background="Green"  HorizontalAlignment="Left" Margin="339,336,0,0" VerticalAlignment="Top" Width="198" Height="52" FontSize="36" FontFamily="Franklin Gothic Demi" Click="button_Click" TabIndex="4">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <TextBlock x:Name="tbkColumnError" Foreground="Red" TextAlignment="Center" Text="" HorizontalAlignment="Left" Margin="273,146,0,0" VerticalAlignment="Top" Width="341" Height="29" FontFamily="Sitka Small" FontSize="14"/>
+        <TextBlock x:Name="tbkRowError" Foreground="Red" TextAlignment="Center" Text="" HorizontalAlignment="Left" Margin="273,221,0,0" VerticalAlignment="Top" Width="341" Height="29"  FontFamily="Sitka Small" FontSize="14"/>
+        <TextBlock x:Name="tbkMineError" Foreground="Red" TextAlignment="Center" Text="" HorizontalAlignment="Left" Margin="273,296,0,0" VerticalAlignment="Top" Width="341" Height="29"  FontFamily="Sitka Small" FontSize="14"/>
+        <TextBlock x:Name="textBlock" Foreground="MidnightBlue" HorizontalAlignment="Left" Margin="10,75,0,0" TextWrapping="Wrap" Text="Minesweeper has its origins in the earliest mainframe games of the 1960s and 1970s. The earliest ancestor of Minesweeper was Jerimac Ratliff's Cube. The basic gameplay style became a popular segment of the puzzle game genre during the 1980s, with such titles as Mined-Out (Quicksilva, 1983), Yomp (Virgin Interactive, 1983), and Cube. Cube was succeeded by Relentless Logic (or RLogic for short), by Conway, Hong, and Smith, available for MS-DOS as early as 1985; the player took the role of a private in the United States Marine Corps, delivering an important message to the U.S. Command Center. RLogic had greater similarity to Minesweeper than to Cube in concept, but a number of differences exist:" VerticalAlignment="Top" Width="183" Height="386" FontFamily="Global User Interface" FontWeight="Bold"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,26,0,0" TextWrapping="Wrap" TextAlignment="Center" Foreground="White" Text="LITTLE HISTORY OF THE GAME" VerticalAlignment="Top" Width="183" Height="44" FontFamily="Rockwell" FontSize="14" TextDecorations="Underline"/>
+    </Grid>
+</Page>
