@@ -178,3 +178,4 @@ C:\Users\23298361\Source\Repos\23512_Team1\minesweeper\minesweeper\obj\Debug\Mai
 C:\Users\23298361\Source\Repos\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.g.resources
 C:\Users\23298361\Source\Repos\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.Properties.Resources.resources
 C:\Users\23298361\Source\Repos\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper.csproj.GenerateResource.Cache
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper_Content.g.cs

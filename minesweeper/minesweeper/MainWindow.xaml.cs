@@ -172,6 +172,11 @@ namespace minesweeper
             if ((string)s.Content == "F")
             {
                 s.Click -= btn_click;
+
+                // changes background of the button to the flag image
+                var brush = new ImageBrush();
+                brush.ImageSource = new BitmapImage(new Uri("Icons/flag.png", UriKind.Relative));
+                s.Background = brush;
             }
             else
             {
