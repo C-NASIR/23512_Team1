@@ -387,11 +387,77 @@ namespace minesweeper
 
             //Third row for game over buttons
             RowDefinition row3 = new RowDefinition();
-            row3.Height = new GridLength(100);
+            row3.Height = new GridLength(50);
             windowGrid.RowDefinitions.Add(row3);
-            
+
+
+            //Row and buttons used for navigation bar
+            RowDefinition row4 = new RowDefinition();
+            row4.Height = new GridLength(100);
+            windowGrid.RowDefinitions.Add(row4);
+
+            Button btnScreenshot = new Button();
+            btnScreenshot.Click += screenCapture_Click;
+            btnScreenshot.Height = 50;
+            btnScreenshot.Width = 50;
+            btnScreenshot.Padding = new Thickness(0, 0, 0, 25);
+            btnScreenshot.Content = "Screenshot";
+
+            Button btnRules = new Button();
+            btnRules.Height = 25;
+            btnRules.Width = 50;
+            btnRules.Content = "Rules";
+
+            Button btnCredits = new Button();
+            btnCredits.Height = 25;
+            btnCredits.Width = 50;
+            btnCredits.Content = "Credits";
+
+            Button btnNavClose = new Button();
+            btnNavClose.Click += closeGame_Click;
+            btnNavClose.Height = 25;
+            btnNavClose.Width = 50;
+            btnNavClose.Content = "Close";
+
+            Button btnNavReplay = new Button();
+            btnNavReplay.Click += newGame_Click;
+            btnNavReplay.Height = 25;
+            btnNavReplay.Width = 50;
+            btnNavReplay.Content = "Replay";
+
+            StackPanel navStack = new StackPanel();
+            navStack.Orientation = Orientation.Vertical;
+            navStack.Width = this.Width;
+            navStack.Height = 350;
+
+            WrapPanel navWrap = new WrapPanel();
+            navWrap.HorizontalAlignment = HorizontalAlignment.Left;
+            navWrap.Height = 31;
+            navWrap.Width = 100;
+            navWrap.Margin = new Thickness((this.Width / 2) - btnRules.Width, 0, 0, 0);
+
+            navWrap.Children.Add(btnRules);
+            navWrap.Children.Add(btnScreenshot);
+            navWrap.Children.Add(btnNavClose);
+            navWrap.Children.Add(btnNavReplay);
+            navStack.Children.Add(navWrap);
+
+            Grid.SetColumn(navStack, 0);
+            Grid.SetRow(navStack, 2);
+            windowGrid.Children.Add(navStack);
+
+            Label testLabel = new Label();
+            testLabel.Content = "testtesttest";
+            Grid.SetColumn(testLabel, 0);
+            Grid.SetRow(testLabel, 2);
+            windowGrid.Children.Add(testLabel);
+            testLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            //End of row and buttons used for navigation bar
+
+
             //Stackpanel for post game labels and buttons
             StackPanel endGameStack = new StackPanel();
+            endGameStack.Visibility = Visibility.Hidden;
             endGameStack.Width = this.Width;
             endGameStack.Height = 400;
          
@@ -432,7 +498,7 @@ namespace minesweeper
 
             //set column and row for endGameStack
             Grid.SetColumn(endGameStack, 0);
-            Grid.SetRow(endGameStack, 2);
+            Grid.SetRow(endGameStack, 3);
             windowGrid.Children.Add(endGameStack);
             
             //Create the  statusStrip grid
@@ -493,7 +559,6 @@ namespace minesweeper
             row1.Height = new GridLength(50);
             statusGrid.RowDefinitions.Add(row1);
 
-
             // Create Flag Counter Label
             Label flagLabel = new Label();
             flagLabel.Name = "FlagCounter";
@@ -519,7 +584,7 @@ namespace minesweeper
             btnCheckScore.Height = 25;
             btnCheckScore.Width = 50;
             //insert the happiest of faces
-
+            
             Grid.SetColumn(btnCheckScore, 1);
             Grid.SetRow(btnCheckScore, 0);
             statusGrid.Children.Add(btnCheckScore);

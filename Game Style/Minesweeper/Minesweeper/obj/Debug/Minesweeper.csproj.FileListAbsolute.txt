@@ -18,3 +18,23 @@ H:\Minesweeper\Minesweeper\obj\Debug\Pages\LoginPage.baml
 H:\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csprojResolveAssemblyReference.cache
 H:\Minesweeper\Minesweeper\obj\Debug\Pages\NavPage.g.cs
 H:\Minesweeper\Minesweeper\obj\Debug\Pages\NavPage.baml
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe.config
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper.exe
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper.pdb
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\bin\Debug\Minesweeper.pdb
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csprojResolveAssemblyReference.cache
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Pages\GridPage.g.cs
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\MainWindow.g.cs
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Pages\LoginPage.g.cs
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Pages\NavPage.g.cs
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\App.g.cs
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper_MarkupCompile.cache
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper_MarkupCompile.lref
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Pages\GridPage.baml
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\MainWindow.baml
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Pages\LoginPage.baml
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Pages\NavPage.baml
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper.g.resources
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper.Properties.Resources.resources
+C:\Users\Hank Hill\Source\Repos\23512_Team12\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csproj.GenerateResource.Cache
