@@ -60,9 +60,8 @@ namespace minesweeper
         // toggles flag status in cell, returns "F" if flagged, "" if un-flagged
         // Tracks flags placed and stops user from using more than max
         // If all bombs are flagged play victory sound and display score
-        public string ButtonRightClicked(string btnName)
+        public bool ButtonRightClicked(string btnName)
         {
-            string displayValue = "";
             int cellLocationX;
             int cellLocationY;
             string[] name = btnName.Split('_');
@@ -79,7 +78,6 @@ namespace minesweeper
                 current_score = current_score + 1;
                 chosenCell.Flagged = true;
                 FlagCounter++;
-                displayValue = "F";
                 if (current_score == max_score)
                 {
                     MessageBox.Show("Victory! The final score was: " + (current_score * 10).ToString());
@@ -95,7 +93,6 @@ namespace minesweeper
             {
                 chosenCell.Flagged = true;
                 FlagCounter++;
-                displayValue = "F";
             }
             else if (chosenCell.Flagged == true && chosenCell.CellValue == 9)
             {
@@ -108,7 +105,7 @@ namespace minesweeper
                 chosenCell.Flagged = false;
                 FlagCounter--;
             }
-            return displayValue;
+            return chosenCell.Flagged;
         }
 
         // On Left-click, parses button name, read cell value in array at specified location

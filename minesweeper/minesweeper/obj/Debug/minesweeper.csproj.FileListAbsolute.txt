@@ -196,3 +196,19 @@ C:\Users\Hank Hill\Source\Repos\23512_Team12\minesweeper\minesweeper\obj\Debug\M
 C:\Users\Hank Hill\Source\Repos\23512_Team12\minesweeper\minesweeper\obj\Debug\minesweeper.g.resources
 C:\Users\Hank Hill\Source\Repos\23512_Team12\minesweeper\minesweeper\obj\Debug\minesweeper.Properties.Resources.resources
 C:\Users\Hank Hill\Source\Repos\23512_Team12\minesweeper\minesweeper\obj\Debug\minesweeper.csproj.GenerateResource.Cache
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\bin\Debug\minesweeper.exe.config
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\minesweeper.exe
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\minesweeper.pdb
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\bin\Debug\minesweeper.exe
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\bin\Debug\minesweeper.pdb
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\minesweeper.csprojResolveAssemblyReference.cache
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\Board.g.cs
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\MainWindow.g.cs
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\App.g.cs
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\minesweeper_MarkupCompile.cache
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\minesweeper_MarkupCompile.lref
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\Board.baml
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\MainWindow.baml
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\minesweeper.g.resources
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\minesweeper.Properties.Resources.resources
+C:\Users\24146897.NWTC\Source\Repos\23512_Team1_3\minesweeper\minesweeper\obj\Debug\minesweeper.csproj.GenerateResource.Cache

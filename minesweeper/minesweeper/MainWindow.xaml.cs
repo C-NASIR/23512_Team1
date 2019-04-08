@@ -117,6 +117,7 @@ namespace minesweeper
                 {
                     Button btn = new Button();
                     btn.Name = "btn_" + y + "_" + x;
+                    btn.Background = System.Windows.Media.Brushes.LightGray;
 
                     //Creating the event signature
                     btn.Click += new RoutedEventHandler(btn_click);
@@ -167,20 +168,21 @@ namespace minesweeper
         void btn_rightClick(object sender, EventArgs e)
         {
             Button s = sender as Button;
-            s.Content = game.ButtonRightClicked(s.Name);
+            bool isFlagged = game.ButtonRightClicked(s.Name);
 
-            if ((string)s.Content == "F")
+            if (isFlagged == true)
             {
                 s.Click -= btn_click;
 
                 // changes background of the button to the flag image
                 var brush = new ImageBrush();
-                brush.ImageSource = new BitmapImage(new Uri("Icons/flag.png", UriKind.Relative));
+                brush.ImageSource = new BitmapImage(new Uri("../../Icons/flag.png", UriKind.Relative));
                 s.Background = brush;
             }
             else
             {
                 s.Click += btn_click;
+                s.Background = System.Windows.Media.Brushes.LightGray;
             }
             foreach (Label l in controls.OfType<Label>())
             {
