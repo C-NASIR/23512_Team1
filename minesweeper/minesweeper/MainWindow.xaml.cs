@@ -614,67 +614,11 @@ namespace minesweeper
             return statusGrid;
         }
 
-        //Possible way to add navigation menu to game board
-        /**
-        public Grid NavigationGrid()
-        {
-            Grid navigationGrid = new Grid();
-            navigationGrid.HorizontalAlignment = HorizontalAlignment.Center;
-            navigationGrid.VerticalAlignment = VerticalAlignment.Center;
-            navigationGrid.ShowGridLines = false;
-            navigationGrid.Background = new VisualBrush();
-
-            ColumnDefinition navigation1 = new ColumnDefinition();
-            navigation1.Width = new GridLength((this.Width / 5) * 2);
-            navigationGrid.ColumnDefinitions.Add(navigation1);
-
-            ColumnDefinition navigation2 = new ColumnDefinition();
-            navigation2.Width = new GridLength(this.Width / 5);
-            navigationGrid.ColumnDefinitions.Add(navigation2);
-
-            ColumnDefinition navigation3 = new ColumnDefinition();
-            navigation3.Width = new GridLength((this.Width / 5) * 2);
-            navigationGrid.ColumnDefinitions.Add(navigation3);
-
-            RowDefinition navRow1 = new RowDefinition();
-            navRow1.Height = new GridLength(25);
-            navigationGrid.RowDefinitions.Add(navRow1);
-
-            //Add navigation menu
-            StackPanel navigationStack = new StackPanel();
-            navigationStack.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            navigationStack.Height = 100;
-            navigationStack.Width = 100;
-            navigationStack.Margin = new Thickness(10, 0, 0, 0);
-            navigationStack.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-
-
-            Button navigationMenu = new Button();
-            navigationMenu.Height = 29;
-            navigationMenu.Name = "Restart";
-
-
-            MenuItem newGameItem = new MenuItem();
-            //newGameItem.Click += newGame_Click;
-
-            Grid.SetColumn(navigationStack, 1);
-            Grid.SetRow(navigationStack, 0);
-            navigationStack.Children.Add(navigationMenu);
-            navigationGrid.Children.Add(navigationStack);
-
-            Grid.SetColumn(navigationMenu, 1);
-            Grid.SetRow(navigationMenu, 0);
-
-
-            Grid.SetColumn(newGameItem, 1);
-            Grid.SetRow(newGameItem, 0);
-            navigationGrid.Children.Add(newGameItem);
-
-            return navigationGrid;
-
-        }
-        **/
-
+        /// <summary>
+        /// Used as the timer for the player's score
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer(object sender, EventArgs e)
         {
             foreach (Label l in controls.OfType<Label>())
@@ -687,6 +631,10 @@ namespace minesweeper
             }
         }
 
+        /// <summary>
+        /// Returns the elapsed.
+        /// </summary>
+        /// <returns></returns>
         public DateTime getTime()
         {
             TimeSpan elapsed = DateTime.Now - StartTime;

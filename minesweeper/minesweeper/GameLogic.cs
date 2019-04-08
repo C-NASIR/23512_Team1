@@ -57,7 +57,7 @@ namespace minesweeper
         }
 
         // On Right-clock, parses button name, read flagged status of cell in array at specified location,
-        // toggles flag status in cell, returns "F" if flagged, "" if un-flagged
+        // toggles flag status in cell, returns the status of the flag
         // Tracks flags placed and stops user from using more than max
         // If all bombs are flagged play victory sound and display score
         public bool ButtonRightClicked(string btnName)
