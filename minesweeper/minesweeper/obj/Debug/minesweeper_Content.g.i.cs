@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icons/flag.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sounds/boom.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sounds/victory.wav")]
 
 

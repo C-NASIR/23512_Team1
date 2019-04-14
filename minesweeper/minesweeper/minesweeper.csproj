@@ -109,11 +109,13 @@
   <ItemGroup>
     <Resource Include="Icons\favicon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="sounds\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Icons\flag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sounds\boom.wav" />
+    <Content Include="sounds\victory.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

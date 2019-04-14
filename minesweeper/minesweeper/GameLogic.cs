@@ -19,8 +19,8 @@ namespace minesweeper
         private MineField game;
 
         //string for sound filepath
-        string lossPath = Environment.CurrentDirectory + "\\sounds" + "\\boom.wav";
-        string victoryPath = Environment.CurrentDirectory + "\\sounds" + "\\victory.wav";
+        string lossPath = Environment.CurrentDirectory + "\\.." + "\\.." + "\\sounds" + "\\boom.wav";
+        string victoryPath = Environment.CurrentDirectory + "\\.." +"\\.." + "\\sounds" + "\\victory.wav";
 
 
         //boolean for game over. True = win False = loss
@@ -75,24 +75,27 @@ namespace minesweeper
             }
             else if (chosenCell.Flagged == false && chosenCell.CellValue == 9)
             {
-                current_score = current_score + 1;
+                current_score++;
                 chosenCell.Flagged = true;
                 FlagCounter++;
+                /**
                 if (current_score == max_score)
                 {
                     MessageBox.Show("Victory! The final score was: " + (current_score * 10).ToString());
                     
                     //load and play victory sound
-                    //System.Media.SoundPlayer victoryPlayer = new System.Media.SoundPlayer();
-                    //victoryPlayer.SoundLocation = victoryPath;
-                    //victoryPlayer.Load();
-                    //victoryPlayer.Play();
+                    System.Media.SoundPlayer victoryPlayer = new System.Media.SoundPlayer();
+                    victoryPlayer.SoundLocation = victoryPath;
+                    victoryPlayer.Load();
+                    victoryPlayer.Play();
                 }
+                **/
             }
             else if (chosenCell.Flagged == false)
             {
                 chosenCell.Flagged = true;
                 FlagCounter++;
+                current_score = current_score + 5;
             }
             else if (chosenCell.Flagged == true && chosenCell.CellValue == 9)
             {
@@ -100,10 +103,11 @@ namespace minesweeper
                 FlagCounter--;
                 current_score--;
             }
-            else
+            else if (chosenCell.Flagged == true && chosenCell.CellValue != 9)
             {
                 chosenCell.Flagged = false;
-                FlagCounter--;
+                flagCounter--;
+                current_score = current_score - 5;
             }
             return chosenCell.Flagged;
         }
@@ -134,11 +138,11 @@ namespace minesweeper
                 //game over
                 stringCells.Add(chosenCell.YLocation + "_" + chosenCell.XLocation.ToString());
 
-                ////load and play explosion sound
-                //System.Media.SoundPlayer boomPlayer = new System.Media.SoundPlayer();
-                //boomPlayer.SoundLocation = lossPath;
-                //boomPlayer.Load();
-                //boomPlayer.Play();
+                //load and play explosion sound
+                System.Media.SoundPlayer boomPlayer = new System.Media.SoundPlayer();
+                boomPlayer.SoundLocation = lossPath;
+                boomPlayer.Load();
+                boomPlayer.Play();
 
                 //message box for game over, set with MessageBoxResult for later use
                 MessageBoxResult gameOverMessage = MessageBox.Show("Game Over");

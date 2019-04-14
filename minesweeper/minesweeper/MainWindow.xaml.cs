@@ -370,6 +370,7 @@ namespace minesweeper
             windowGrid.VerticalAlignment = VerticalAlignment.Center;
             windowGrid.ShowGridLines = false;
             windowGrid.Background = new SolidColorBrush(Colors.DarkOliveGreen);
+            windowGrid.Name = "windowGrid";
 
             //Define the number of columns in the window (1) at the width of the window
             ColumnDefinition column = new ColumnDefinition();
@@ -389,80 +390,104 @@ namespace minesweeper
 
             //Third row for game over buttons
             RowDefinition row3 = new RowDefinition();
-            row3.Height = new GridLength(50);
+            row3.Height = new GridLength(100);
             windowGrid.RowDefinitions.Add(row3);
-
 
             //Row and buttons used for navigation bar
             RowDefinition row4 = new RowDefinition();
             row4.Height = new GridLength(100);
             windowGrid.RowDefinitions.Add(row4);
 
+            //screenshot button for navbar
             Button btnScreenshot = new Button();
             btnScreenshot.Click += screenCapture_Click;
-            btnScreenshot.Height = 50;
-            btnScreenshot.Width = 50;
-            btnScreenshot.Padding = new Thickness(0, 0, 0, 25);
+            btnScreenshot.Height = 25;
+            btnScreenshot.Width = 100;
+            btnScreenshot.Padding = new Thickness(0, 0, 0, 0);
+            btnScreenshot.Margin = new Thickness(50, 0, -50, 0);
             btnScreenshot.Content = "Screenshot";
 
+            //rules button for nav bar
             Button btnRules = new Button();
             btnRules.Height = 25;
             btnRules.Width = 50;
             btnRules.Content = "Rules";
+            btnRules.Click += rules_Click;
 
+            //credit button for nav bar
             Button btnCredits = new Button();
             btnCredits.Height = 25;
             btnCredits.Width = 50;
             btnCredits.Content = "Credits";
+            btnCredits.Click += credits_Click;
 
+            //close game button for nav bar
             Button btnNavClose = new Button();
             btnNavClose.Click += closeGame_Click;
             btnNavClose.Height = 25;
             btnNavClose.Width = 50;
             btnNavClose.Content = "Close";
 
+            //replay button for nav bar
             Button btnNavReplay = new Button();
             btnNavReplay.Click += newGame_Click;
             btnNavReplay.Height = 25;
             btnNavReplay.Width = 50;
             btnNavReplay.Content = "Replay";
 
+            //stack panel to contain navigation elements
             StackPanel navStack = new StackPanel();
             navStack.Orientation = Orientation.Vertical;
             navStack.Width = this.Width;
-            navStack.Height = 350;
+            navStack.Height = 500;
 
+            //wrap panel to contain first row of nav bar elements, rules and credits buttons
             WrapPanel navWrap = new WrapPanel();
             navWrap.HorizontalAlignment = HorizontalAlignment.Left;
+            navWrap.Orientation = Orientation.Vertical;
             navWrap.Height = 31;
             navWrap.Width = 100;
             navWrap.Margin = new Thickness((this.Width / 2) - btnRules.Width, 0, 0, 0);
 
-            navWrap.Children.Add(btnRules);
-            navWrap.Children.Add(btnScreenshot);
-            navWrap.Children.Add(btnNavClose);
-            navWrap.Children.Add(btnNavReplay);
-            navStack.Children.Add(navWrap);
+            //wrap panel for second row of nav bar elements, close and replay buttons
+            WrapPanel navWrap2 = new WrapPanel();
+            navWrap2.HorizontalAlignment = HorizontalAlignment.Left;
+            navWrap2.Height = 31;
+            navWrap2.Width = 100;
+            navWrap2.Margin = new Thickness((this.Width / 2) - btnNavClose.Width, 0, 0, 0);
 
+            //wrap panel for third row of nav bar elements, screenshot button
+            WrapPanel navWrap3 = new WrapPanel();
+            navWrap3.HorizontalAlignment = HorizontalAlignment.Left;
+            navWrap3.Height = 31;
+            navWrap3.Width = 100;
+            navWrap3.Margin = new Thickness((this.Width / 2) - btnScreenshot.Width, 0, 0, 0);
+
+            //add respective elements to each wrap panel
+            navWrap.Children.Add(btnRules);
+            navWrap.Children.Add(btnCredits);
+            navWrap2.Children.Add(btnNavClose);
+            navWrap2.Children.Add(btnNavReplay);
+            navWrap3.Children.Add(btnScreenshot);
+
+            //add wrap panels to the navStack stack panel
+            navStack.Children.Add(navWrap);
+            navStack.Children.Add(navWrap2);
+            navStack.Children.Add(navWrap3);
+
+            //column/row for navStack
             Grid.SetColumn(navStack, 0);
             Grid.SetRow(navStack, 2);
             windowGrid.Children.Add(navStack);
-
-            Label testLabel = new Label();
-            testLabel.Content = "testtesttest";
-            Grid.SetColumn(testLabel, 0);
-            Grid.SetRow(testLabel, 2);
-            windowGrid.Children.Add(testLabel);
-            testLabel.HorizontalAlignment = HorizontalAlignment.Center;
             //End of row and buttons used for navigation bar
-
 
             //Stackpanel for post game labels and buttons
             StackPanel endGameStack = new StackPanel();
-            endGameStack.Visibility = Visibility.Hidden;
+            endGameStack.Visibility = Visibility.Collapsed;
             endGameStack.Width = this.Width;
             endGameStack.Height = 400;
-         
+            endGameStack.Tag = "check";
+
             //btn for replay in post game
             Button btnReplay = new Button();
             btnReplay.Click += newGame_Click;
@@ -531,6 +556,7 @@ namespace minesweeper
             clock.Start();
         }
 
+
         public Grid StatusBar()
         {
             //Create the status strip grid
@@ -575,7 +601,6 @@ namespace minesweeper
             flagLabel.Background = new SolidColorBrush(Colors.White);
             flagLabel.BorderBrush = new SolidColorBrush(Colors.Black);
 
-
             //Add Flag Counter Label to statusGrid
             Grid.SetColumn(flagLabel, 0);
             Grid.SetRow(flagLabel, 0);
@@ -584,9 +609,12 @@ namespace minesweeper
             //btn for displaying post game menu
             Button btnCheckScore = new Button();
             btnCheckScore.Height = 25;
-            btnCheckScore.Width = 50;
+            btnCheckScore.Width = 75;
+            btnCheckScore.Content = "Smileface";
+            btnCheckScore.Click += checkScore_Click;
+
             //insert the happiest of faces
-            
+
             Grid.SetColumn(btnCheckScore, 1);
             Grid.SetRow(btnCheckScore, 0);
             statusGrid.Children.Add(btnCheckScore);
@@ -677,12 +705,139 @@ namespace minesweeper
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
                     String filename = "ScreenCapture-" + DateTime.Now.ToString("ddMMyyyy-hhmmss") + ".png";
-                    string screenPath = AppDomain.CurrentDomain.BaseDirectory + "\\images" + "\\" + filename;
+                    string screenPath = AppDomain.CurrentDomain.BaseDirectory + "\\.." + "\\.." + "\\images" + "\\" + filename;
                     Opacity = .0;
                     g.CopyFromScreen((int)screenLeft, (int)screenTop, 0, 0, bmp.Size);
                     bmp.Save(screenPath);
                     Opacity = 1;
                 }
+            }
+        }
+        /// <summary>
+        /// Click event for credits, will display some information about the team members
+        /// </summary>
+        private void credits_Click(object sender, RoutedEventArgs e)
+        {
+            //Create the Window Base Grid
+            Grid creditGrid = new Grid();
+            creditGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            creditGrid.VerticalAlignment = VerticalAlignment.Center;
+            creditGrid.ShowGridLines = false;
+            creditGrid.Background = new SolidColorBrush(Colors.DarkOliveGreen);
+            creditGrid.Name = "windowGrid";
+
+            //Define the number of columns in the window (1) at the width of the window
+            ColumnDefinition column = new ColumnDefinition();
+            column.Width = new GridLength(this.Width);
+            creditGrid.ColumnDefinitions.Add(column);
+
+            //Define the number of rows in the window (2) 
+            RowDefinition row1 = new RowDefinition();
+            row1.Height = new GridLength(50);
+            creditGrid.RowDefinitions.Add(row1);
+
+            RowDefinition row2 = new RowDefinition();
+            row2.Height = new GridLength(this.Height - 150);
+            creditGrid.RowDefinitions.Add(row2);
+
+            //label for information on creators, will add more as bios are created
+            Label lblCreator = new Label();
+            lblCreator.Content = "Heres a little more about the creators of this game";
+
+            //return to game board
+            Button btnReturn = new Button();
+            btnReturn.Content = "Return";
+            btnReturn.Click += return_Click;
+            btnReturn.Height = 31;
+            btnReturn.Width = 50;
+
+            //column/row for elements
+            Grid.SetColumn(lblCreator, 0);
+            Grid.SetRow(lblCreator, 0);
+            Grid.SetColumn(btnReturn, 1);
+            Grid.SetRow(btnReturn, 1);
+
+            creditGrid.Children.Add(lblCreator);
+            creditGrid.Children.Add(btnReturn);
+            //adding the dynamic grid to the mainwindow
+            Content = creditGrid;
+
+            controls = FindVisualChildren<Control>(Application.Current.MainWindow);
+        }
+
+        /// <summary>
+        /// Click event for displaying rules of minesweeper, possibly link to wikipedia rules article
+        /// </summary>
+        private void rules_Click(object sender, RoutedEventArgs e)
+        {
+            //Create the Window Base Grid
+            Grid rulesGrid = new Grid();
+            rulesGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            rulesGrid.VerticalAlignment = VerticalAlignment.Center;
+            rulesGrid.ShowGridLines = false;
+            rulesGrid.Background = new SolidColorBrush(Colors.DarkOliveGreen);
+            rulesGrid.Name = "windowGrid";
+
+            //Define the number of columns in the window (1) at the width of the window
+            ColumnDefinition column = new ColumnDefinition();
+            column.Width = new GridLength(this.Width);
+            rulesGrid.ColumnDefinitions.Add(column);
+
+            //Define the number of rows in the window (2) 
+            RowDefinition row1 = new RowDefinition();
+            row1.Height = new GridLength(50);
+            rulesGrid.RowDefinitions.Add(row1);
+
+            RowDefinition row2 = new RowDefinition();
+            row2.Height = new GridLength(this.Height - 150);
+            rulesGrid.RowDefinitions.Add(row2);
+
+            //label for information on game rules, will expand the information
+            Label lblRules = new Label();
+            lblRules.Content = "Rules of Minesweeper";
+
+            //return to game board
+            Button btnReturn = new Button();
+            btnReturn.Content = "Return";
+            btnReturn.Click += return_Click;
+            btnReturn.Height = 31;
+            btnReturn.Width = 50;
+
+            //column/row for elements
+            Grid.SetColumn(lblRules, 0);
+            Grid.SetRow(lblRules, 0);
+            Grid.SetColumn(btnReturn, 1);
+            Grid.SetRow(btnReturn, 1);
+
+            rulesGrid.Children.Add(lblRules);
+            rulesGrid.Children.Add(btnReturn);
+
+            //adding the dynamic grid to mainwindow
+            Content = rulesGrid;
+
+            controls = FindVisualChildren<Control>(Application.Current.MainWindow);
+        }
+
+        /// <summary>
+        /// Click event for checking score and ending game
+        /// </summary>
+        private void checkScore_Click(object sender, RoutedEventArgs e)
+        {
+            //calls to dynamically created grid elements not working
+            //object check = (e.Source as Button).Tag;
+            //endGameStack.Vistibility = Visibility.Visible;
+            MessageBox.Show("Your score is " + current_score.ToString());
+
+        }
+
+        /// <summary>
+        /// Click event for returning to game board, will not keep progress towards game
+        /// </summary>
+        private void return_Click(object sender, RoutedEventArgs e)
+        {
+            if (Inputchecker(txtWidth.Text, txtHeight.Text, txtBombs.Text))
+            {
+                game = new GameLogic(int.Parse(txtWidth.Text), int.Parse(txtHeight.Text), int.Parse(txtBombs.Text));
             }
         }
     }
