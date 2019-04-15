@@ -87,7 +87,7 @@ namespace minesweeper
             dynamicGrid.HorizontalAlignment = HorizontalAlignment.Center;
             dynamicGrid.VerticalAlignment = VerticalAlignment.Center;
             dynamicGrid.ShowGridLines = false;
-            dynamicGrid.Background = new SolidColorBrush(Colors.AntiqueWhite);
+            dynamicGrid.Background = System.Windows.Media.Brushes.LightGray;
 
 
             /*This loop is getting the user from the number of columns and makes that number 
