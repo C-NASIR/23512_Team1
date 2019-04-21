@@ -79,7 +79,7 @@ namespace minesweeper
         /// <summary>
         /// This Method Creates Dynamic Grid by using the number of rows and columns the user entered
         /// </summary>
-        public  Grid DynamicGridCreator(int numrows, int numColumns)
+        public Grid DynamicGridCreator(int numrows, int numColumns)
         {
             //initiating the new dynamic grid: giving some values and setting some properties
             Grid dynamicGrid = new Grid();
@@ -121,14 +121,14 @@ namespace minesweeper
 
                     //Creating the event signature
                     btn.Click += new RoutedEventHandler(btn_click);
-                    btn.MouseRightButtonDown += new MouseButtonEventHandler(btn_rightClick);   
+                    btn.MouseRightButtonDown += new MouseButtonEventHandler(btn_rightClick);
                     Grid.SetColumn(btn, x);
                     Grid.SetRow(btn, y);
                     dynamicGrid.Children.Add(btn);
-                }            
+                }
             }
 
-            
+
             //send dynamicGrid to the window to add to the window Grid
             return dynamicGrid;
         }
@@ -137,31 +137,37 @@ namespace minesweeper
         void btn_click(object sender, EventArgs e)
         {
             Button s = sender as Button;
-          
+
             List<string> cells = game.ButtonLeftClicked(s.Name);
 
-            foreach (string n in cells)
+            if (game.GameEnd == true)
             {
-
-                int cellLocationX;
-                int cellLocationY;
-                string[] btnName = n.Split('_');
-                int.TryParse(btnName[0], out cellLocationY);
-                int.TryParse(btnName[1], out cellLocationX);
-                
-                foreach (Button b in controls.OfType<Button>())
+                EndGame();
+            }
+            else
+            {
+                foreach (string n in cells)
                 {
-                    if (b.Name == "btn_" + cellLocationY + "_" + cellLocationX)
+
+                    int cellLocationX;
+                    int cellLocationY;
+                    string[] btnName = n.Split('_');
+                    int.TryParse(btnName[0], out cellLocationY);
+                    int.TryParse(btnName[1], out cellLocationX);
+
+                    foreach (Button b in controls.OfType<Button>())
                     {
-                        //b.Click -= btn_click;
-                        //b.MouseRightButtonDown -= btn_rightClick;
-                        b.Content = game.Game.Cells[cellLocationY, cellLocationX].CellDisplayValue;
-                        //AnimationBTN(b);
-                        b.IsEnabled = false;
-                        break;
+                        if (b.Name == "btn_" + cellLocationY + "_" + cellLocationX)
+                        {
+                            b.Content = game.Game.Cells[cellLocationY, cellLocationX].CellDisplayValue;
+                            b.IsEnabled = false;
+                            break;
+                        }
                     }
                 }
             }
+
+
         }
 
         //This is the click event of the dynamic event handler
@@ -296,15 +302,9 @@ namespace minesweeper
             //call the input checker method
             if (Inputchecker(txtWidth.Text, txtHeight.Text, txtBombs.Text))
             {
-                game = new GameLogic(int.Parse(txtWidth.Text),int.Parse(txtHeight.Text),int.Parse(txtBombs.Text));
+                game = new GameLogic(int.Parse(txtWidth.Text), int.Parse(txtHeight.Text), int.Parse(txtBombs.Text));
             }
         }
-
-        ////Button Animation method
-        //private void AnimationBTN(Button b)
-        //{
-        //    b.Background = System.Windows.Media.Brushes.Yellow;
-        //}
 
         //Removes label text from txtBox as user selects it
         private void txtHeight_GotFocus(object sender, RoutedEventArgs e)
@@ -339,7 +339,7 @@ namespace minesweeper
                     {
                         //Calling the dynamic grid creator method
                         //DynamicGridCreator(x, y);
-                        Window(x,y);
+                        Window(x, y);
                         checker = true;
                     }
                     else
@@ -494,7 +494,7 @@ namespace minesweeper
             btnReplay.Height = 25;
             btnReplay.Width = 50;
             btnReplay.Content = "Replay";
-            
+
             //btn for closing game in post game
             Button btnClose = new Button();
             btnClose.Click += closeGame_Click;
@@ -515,7 +515,7 @@ namespace minesweeper
             endGameWrap.HorizontalAlignment = HorizontalAlignment.Left;
             endGameWrap.Height = 31;
             endGameWrap.Width = 100;
-            endGameWrap.Margin = new Thickness((this.Width/2) - btnReplay.Width, 0, 0, 0);
+            endGameWrap.Margin = new Thickness((this.Width / 2) - btnReplay.Width, 0, 0, 0);
 
             //add controls to stackpanel
             endGameStack.Children.Add(lblScore);
@@ -527,7 +527,7 @@ namespace minesweeper
             Grid.SetColumn(endGameStack, 0);
             Grid.SetRow(endGameStack, 3);
             windowGrid.Children.Add(endGameStack);
-            
+
             //Create the  statusStrip grid
             Grid statusStrip = StatusBar();
 
@@ -823,11 +823,42 @@ namespace minesweeper
         /// </summary>
         private void checkScore_Click(object sender, RoutedEventArgs e)
         {
+            EndGame();
             //calls to dynamically created grid elements not working
             //object check = (e.Source as Button).Tag;
             //endGameStack.Vistibility = Visibility.Visible;
-            MessageBox.Show("Your score is " + current_score.ToString());
 
+        }
+
+
+        /// <summary>
+        /// Process the various elements when the game is over
+        /// </summary>
+        private void EndGame()
+        {
+            RevealBoard();
+            int score = game.CalculateScore(getTime().ToString("HH:mm:ss"));
+
+        }
+
+        /// <summary>
+        /// Reveals the board when the game is over
+        /// </summary>
+        private void RevealBoard()
+        {
+            foreach (Cell c in game.Game.Cells)
+            {
+
+                foreach (Button b in controls.OfType<Button>())
+                {
+                    if (b.Name == "btn_" + c.YLocation + "_" + c.XLocation)
+                    {
+                        b.Content = game.Game.Cells[c.YLocation, c.XLocation].CellDisplayValue;
+                        b.IsEnabled = false;
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>

@@ -22,10 +22,6 @@ namespace minesweeper
         string lossPath = Environment.CurrentDirectory + "\\.." + "\\.." + "\\sounds" + "\\boom.wav";
         string victoryPath = Environment.CurrentDirectory + "\\.." +"\\.." + "\\sounds" + "\\victory.wav";
 
-
-        //boolean for game over. True = win False = loss
-        public bool gameEnd;
-
         //int for tracking scores
         private int current_score = 0;
 
@@ -36,6 +32,9 @@ namespace minesweeper
         private int maxFlags = int.Parse(((MainWindow)Application.Current.MainWindow).txtBombs.Text) + 2;
 
         private int flagCounter = 0;
+
+        //used to determine if the player clicked on a bomb
+        private bool gameEnd = false;
 
         // public property of minefield
         public MineField Game
@@ -49,6 +48,11 @@ namespace minesweeper
             set { flagCounter = value; }
         }
 
+        public bool GameEnd
+        {
+            get { return gameEnd; }
+        }
+
         //GameLogic constructor
         public GameLogic(int y, int x, int numMine)
         {
@@ -59,7 +63,6 @@ namespace minesweeper
         // On Right-clock, parses button name, read flagged status of cell in array at specified location,
         // toggles flag status in cell, returns the status of the flag
         // Tracks flags placed and stops user from using more than max
-        // If all bombs are flagged play victory sound and display score
         public bool ButtonRightClicked(string btnName)
         {
             int cellLocationX;
@@ -73,41 +76,15 @@ namespace minesweeper
             {
                 MessageBox.Show("Maximum number of flags placed.");
             }
-            else if (chosenCell.Flagged == false && chosenCell.CellValue == 9)
-            {
-                current_score++;
-                chosenCell.Flagged = true;
-                FlagCounter++;
-                /**
-                if (current_score == max_score)
-                {
-                    MessageBox.Show("Victory! The final score was: " + (current_score * 10).ToString());
-                    
-                    //load and play victory sound
-                    System.Media.SoundPlayer victoryPlayer = new System.Media.SoundPlayer();
-                    victoryPlayer.SoundLocation = victoryPath;
-                    victoryPlayer.Load();
-                    victoryPlayer.Play();
-                }
-                **/
-            }
             else if (chosenCell.Flagged == false)
             {
                 chosenCell.Flagged = true;
                 FlagCounter++;
-                current_score = current_score + 5;
             }
-            else if (chosenCell.Flagged == true && chosenCell.CellValue == 9)
+            else if (chosenCell.Flagged == true)
             {
                 chosenCell.Flagged = false;
                 FlagCounter--;
-                current_score--;
-            }
-            else if (chosenCell.Flagged == true && chosenCell.CellValue != 9)
-            {
-                chosenCell.Flagged = false;
-                flagCounter--;
-                current_score = current_score - 5;
             }
             return chosenCell.Flagged;
         }
@@ -147,12 +124,8 @@ namespace minesweeper
                 //message box for game over, set with MessageBoxResult for later use
                 MessageBoxResult gameOverMessage = MessageBox.Show("Game Over");
 
-                //close grid and show start menu again, right now simply closes application and reopens
-                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-                Application.Current.Shutdown();
+                gameEnd = true;
 
-                //set game to lost
-                gameEnd = false;
             }
             else
             {
@@ -298,6 +271,15 @@ namespace minesweeper
                 }
             }
             return returnedCells;
+        }
+
+        /// <summary>
+        /// Returns the calculated score based on the time, and flag positions
+        /// </summary>
+        /// <returns></returns>
+        internal int CalculateScore(String time)
+        {
+            return 0;
         }
     }
 }
