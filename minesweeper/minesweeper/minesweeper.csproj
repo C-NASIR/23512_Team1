@@ -114,6 +114,7 @@
     <Resource Include="Icons\flag.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Icons\bomb.png" />
     <Content Include="sounds\boom.wav" />
     <Content Include="sounds\victory.wav" />
   </ItemGroup>
