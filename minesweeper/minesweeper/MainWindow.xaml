@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:minesweeper"
         mc:Ignorable="d"
-        Title="Minesweeper" Height="AUTO" Width="Auto" SizeToContent="WidthAndHeight" Icon="Icons/favicon.ico">
+        Title="Minesweeper" Height="AUTO" Width="Auto" ResizeMode="NoResize"  SizeToContent="WidthAndHeight" Icon="Icons/favicon.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="787*"/>

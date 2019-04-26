@@ -280,3 +280,4 @@ C:\Users\24146897.NWTC\Source\Repos\23512_Team14\minesweeper\minesweeper\obj\Deb
 C:\Users\24146897.NWTC\Source\Repos\23512_Team14\minesweeper\minesweeper\obj\Debug\minesweeper.csproj.GenerateResource.Cache
 C:\Users\24146897.NWTC\Source\Repos\23512_Team14\minesweeper\minesweeper\obj\Debug\minesweeper.exe
 C:\Users\24146897.NWTC\Source\Repos\23512_Team14\minesweeper\minesweeper\obj\Debug\minesweeper.pdb
+H:\Team Dev\23512_Team1\minesweeper\minesweeper\obj\Debug\minesweeper_Content.g.cs

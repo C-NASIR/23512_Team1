@@ -374,18 +374,17 @@ namespace minesweeper
 
             //Define the number of columns in the window (1) at the width of the window
             ColumnDefinition column = new ColumnDefinition();
-            column.Width = new GridLength(this.Width);
             windowGrid.ColumnDefinitions.Add(column);
 
             //Define the number of rows in the window (2) 
             //First row at height of the status bar (to be defined next)
             RowDefinition row1 = new RowDefinition();
-            row1.Height = new GridLength(50);
+            row1.Height = new GridLength(0,GridUnitType.Auto);
             windowGrid.RowDefinitions.Add(row1);
 
             //Second row to fill the remainder of the window height
             RowDefinition row2 = new RowDefinition();
-            row2.Height = new GridLength(this.Height - 150);
+            row2.Height = new GridLength(10, GridUnitType.Auto);
             windowGrid.RowDefinitions.Add(row2);
 
             //Third row for game over buttons
@@ -395,7 +394,7 @@ namespace minesweeper
 
             //Row and buttons used for navigation bar
             RowDefinition row4 = new RowDefinition();
-            row4.Height = new GridLength(100);
+            row4.Height = new GridLength(0, GridUnitType.Auto);
             windowGrid.RowDefinitions.Add(row4);
 
             //screenshot button for navbar
