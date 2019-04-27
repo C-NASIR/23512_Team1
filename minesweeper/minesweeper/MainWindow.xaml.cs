@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using System.Globalization;
 using System.Drawing;
 using System.IO;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace minesweeper
 {
@@ -160,14 +161,20 @@ namespace minesweeper
                         if (b.Name == "btn_" + cellLocationY + "_" + cellLocationX)
                         {
                             b.Content = game.Game.Cells[cellLocationY, cellLocationX].CellDisplayValue;
-                            b.IsEnabled = false;
+                            //b.IsEnabled = false;
+                            b.Click -= btn_click;
+                            b.Click += btn_unclick;
+                            b.Background = Brushes.Yellow;
                             break;
                         }
                     }
                 }
             }
+        }
 
-
+        void btn_unclick(object sender, EventArgs e)
+        {
+            
         }
 
         //This is the click event of the dynamic event handler
