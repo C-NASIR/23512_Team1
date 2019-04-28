@@ -271,6 +271,10 @@ namespace minesweeper
             {
                 MessageBox.Show("Please enter a grid height and width.");
             }
+            else if (int.Parse(txtWidth.Text) > 15 || int.Parse(txtHeight.Text) > 15)
+            {
+                MessageBox.Show("Grid cannot be more than 15 x 15");
+            }
             else
             {
                 //If input is correct users will be allowed to enter # of bombs
@@ -301,6 +305,7 @@ namespace minesweeper
                 game_bombs = int.Parse(txtBombs.Text);
                 BombChoice.IsEnabled = false;
                 SubmitBtn.Visibility = Visibility.Visible;
+                SubmitBtn.IsEnabled = true;
             }
         }
 
@@ -394,98 +399,11 @@ namespace minesweeper
             row2.Height = new GridLength(10, GridUnitType.Auto);
             windowGrid.RowDefinitions.Add(row2);
 
-            //Third row for game over buttons
+            //Third row navGrid
             RowDefinition row3 = new RowDefinition();
-            row3.Height = new GridLength(100);
+            row3.Height = new GridLength(300);
             windowGrid.RowDefinitions.Add(row3);
 
-            //Row and buttons used for navigation bar
-            RowDefinition row4 = new RowDefinition();
-            row4.Height = new GridLength(0, GridUnitType.Auto);
-            windowGrid.RowDefinitions.Add(row4);
-
-            //screenshot button for navbar
-            Button btnScreenshot = new Button();
-            btnScreenshot.Click += screenCapture_Click;
-            btnScreenshot.Height = 25;
-            btnScreenshot.Width = 100;
-            btnScreenshot.Padding = new Thickness(0, 0, 0, 0);
-            btnScreenshot.Margin = new Thickness(50, 0, -50, 0);
-            btnScreenshot.Content = "Screenshot";
-
-            //rules button for nav bar
-            Button btnRules = new Button();
-            btnRules.Height = 25;
-            btnRules.Width = 50;
-            btnRules.Content = "Rules";
-            btnRules.Click += rules_Click;
-
-            //credit button for nav bar
-            Button btnCredits = new Button();
-            btnCredits.Height = 25;
-            btnCredits.Width = 50;
-            btnCredits.Content = "Credits";
-            btnCredits.Click += credits_Click;
-
-            //close game button for nav bar
-            Button btnNavClose = new Button();
-            btnNavClose.Click += closeGame_Click;
-            btnNavClose.Height = 25;
-            btnNavClose.Width = 50;
-            btnNavClose.Content = "Close";
-
-            //replay button for nav bar
-            Button btnNavReplay = new Button();
-            btnNavReplay.Click += newGame_Click;
-            btnNavReplay.Height = 25;
-            btnNavReplay.Width = 50;
-            btnNavReplay.Content = "Replay";
-
-            //stack panel to contain navigation elements
-            StackPanel navStack = new StackPanel();
-            navStack.Orientation = Orientation.Vertical;
-            navStack.Width = this.Width;
-            navStack.Height = 500;
-
-            //wrap panel to contain first row of nav bar elements, rules and credits buttons
-            WrapPanel navWrap = new WrapPanel();
-            navWrap.HorizontalAlignment = HorizontalAlignment.Left;
-            navWrap.Orientation = Orientation.Vertical;
-            navWrap.Height = 31;
-            navWrap.Width = 100;
-            navWrap.Margin = new Thickness((this.Width / 2) - btnRules.Width, 0, 0, 0);
-
-            //wrap panel for second row of nav bar elements, close and replay buttons
-            WrapPanel navWrap2 = new WrapPanel();
-            navWrap2.HorizontalAlignment = HorizontalAlignment.Left;
-            navWrap2.Height = 31;
-            navWrap2.Width = 100;
-            navWrap2.Margin = new Thickness((this.Width / 2) - btnNavClose.Width, 0, 0, 0);
-
-            //wrap panel for third row of nav bar elements, screenshot button
-            WrapPanel navWrap3 = new WrapPanel();
-            navWrap3.HorizontalAlignment = HorizontalAlignment.Left;
-            navWrap3.Height = 31;
-            navWrap3.Width = 100;
-            navWrap3.Margin = new Thickness((this.Width / 2) - btnScreenshot.Width, 0, 0, 0);
-
-            //add respective elements to each wrap panel
-            navWrap.Children.Add(btnRules);
-            navWrap.Children.Add(btnCredits);
-            navWrap2.Children.Add(btnNavClose);
-            navWrap2.Children.Add(btnNavReplay);
-            navWrap3.Children.Add(btnScreenshot);
-
-            //add wrap panels to the navStack stack panel
-            navStack.Children.Add(navWrap);
-            navStack.Children.Add(navWrap2);
-            navStack.Children.Add(navWrap3);
-
-            //column/row for navStack
-            Grid.SetColumn(navStack, 0);
-            Grid.SetRow(navStack, 2);
-            windowGrid.Children.Add(navStack);
-            //End of row and buttons used for navigation bar
 
             //Stackpanel for post game labels and buttons
             StackPanel endGameStack = new StackPanel();
@@ -530,12 +448,15 @@ namespace minesweeper
             endGameStack.Children.Add(endGameWrap);
 
             //set column and row for endGameStack
-            Grid.SetColumn(endGameStack, 0);
-            Grid.SetRow(endGameStack, 3);
-            windowGrid.Children.Add(endGameStack);
+            //Grid.SetColumn(endGameStack, 0);
+            //Grid.SetRow(endGameStack, 3);
+            //windowGrid.Children.Add(endGameStack);
 
             //Create the  statusStrip grid
             Grid statusStrip = StatusBar();
+
+            //Create navigation grid
+            Grid navStrip = NavGrid();
 
             //Create the gameboard grid
             Grid gameBoard = DynamicGridCreator(x, y);
@@ -545,12 +466,17 @@ namespace minesweeper
             Grid.SetRow(statusStrip, 0);
             Grid.SetColumn(gameBoard, 0);
             Grid.SetRow(gameBoard, 1);
+            Grid.SetColumn(navStrip, 0);
+            Grid.SetRow(navStrip, 2);
 
             //Add the statusBar
             windowGrid.Children.Add(statusStrip);
 
             //Add the gameboard
             windowGrid.Children.Add(gameBoard);
+
+            //Add the navBar
+            windowGrid.Children.Add(navStrip);
 
             //adding the dynamic grid to the mainwindow
             Content = windowGrid;
@@ -590,7 +516,7 @@ namespace minesweeper
 
             //Define the row (1) at size 50
             RowDefinition row1 = new RowDefinition();
-            row1.Height = new GridLength(50);
+            row1.Height = new GridLength(0, GridUnitType.Auto);
             statusGrid.RowDefinitions.Add(row1);
 
             // Create Flag Counter Label
@@ -646,6 +572,118 @@ namespace minesweeper
 
             //Return Grid
             return statusGrid;
+        }
+
+        public Grid NavGrid()
+        {
+            Grid navGrid = new Grid();
+            navGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            navGrid.VerticalAlignment = VerticalAlignment.Center;
+            navGrid.ShowGridLines = false;
+            navGrid.Background = new VisualBrush();
+
+            //Define the number of columns in the window (3)
+            //First column = 2/5ths of window
+            ColumnDefinition navCol = new ColumnDefinition();
+            navCol.Width = new GridLength(this.Width);
+            navGrid.ColumnDefinitions.Add(navCol);
+
+            RowDefinition navRow = new RowDefinition();
+            navRow.Height = new GridLength(300);
+            
+            navGrid.RowDefinitions.Add(navRow);
+
+
+            //screenshot button for navbar
+            Button btnScreenshot = new Button();
+            btnScreenshot.Click += screenCapture_Click;
+            btnScreenshot.Height = 25;
+            btnScreenshot.Width = 100;
+            btnScreenshot.Padding = new Thickness(0, 0, 0, 0);
+            btnScreenshot.Margin = new Thickness(50, 0, -50, 0);
+            btnScreenshot.Content = "Screenshot";
+
+            //rules button for nav bar
+            Button btnRules = new Button();
+            btnRules.Height = 25;
+            btnRules.Width = 50;
+            btnRules.Content = "Rules";
+            btnRules.Click += rules_Click;
+            //btnRules.Margin = new Thickness(0, 0, 2, 0);
+
+            //credit button for nav bar
+            Button btnCredits = new Button();
+            btnCredits.Height = 25;
+            btnCredits.Width = 50;
+            btnCredits.Content = "Credits";
+            btnCredits.Click += credits_Click;
+
+            //close game button for nav bar
+            Button btnNavClose = new Button();
+            btnNavClose.Click += closeGame_Click;
+            btnNavClose.Height = 25;
+            btnNavClose.Width = 50;
+            btnNavClose.Content = "Close";
+            //btnNavClose.Margin = new Thickness(0, 0, 2, 0);
+
+            //replay button for nav bar
+            Button btnNavReplay = new Button();
+            btnNavReplay.Click += newGame_Click;
+            btnNavReplay.Height = 25;
+            btnNavReplay.Width = 50;
+            btnNavReplay.Content = "Replay";
+
+            //stack panel to contain navigation elements
+            StackPanel navStack = new StackPanel();
+            navStack.Orientation = Orientation.Horizontal;
+            navStack.Width = this.Width;
+            navStack.Height = 500;
+            navStack.Margin = new Thickness(0, -100, 0, 0);
+
+            //wrap panel to contain first row of nav bar elements, rules and credits buttons
+            WrapPanel navWrap = new WrapPanel();
+            navWrap.HorizontalAlignment = HorizontalAlignment.Left;
+            navWrap.Orientation = Orientation.Vertical;
+            navWrap.Height = 31;
+            navWrap.Width = 100;
+            navWrap.Margin = new Thickness(250, 0, 0, 0);
+
+
+            //wrap panel for second row of nav bar elements, close and replay buttons
+            WrapPanel navWrap2 = new WrapPanel();
+            navWrap2.HorizontalAlignment = HorizontalAlignment.Left;
+            navWrap2.Height = 31;
+            navWrap2.Width = 100;
+            navWrap2.Margin = new Thickness(0, 0, 0, 0);
+
+            //wrap panel for third row of nav bar elements, screenshot button
+            WrapPanel navWrap3 = new WrapPanel();
+            navWrap3.HorizontalAlignment = HorizontalAlignment.Left;
+            navWrap3.Height = 31;
+            navWrap3.Width = 100;
+            navWrap3.Margin = new Thickness(-50, 0, 0, 0);
+
+            //add respective elements to each wrap panel
+            navWrap.Children.Add(btnRules);
+            navWrap.Children.Add(btnCredits);
+            navWrap2.Children.Add(btnNavClose);
+            navWrap2.Children.Add(btnNavReplay);
+            navWrap3.Children.Add(btnScreenshot);
+
+            //add wrap panels to the navStack stack panel
+            navStack.Children.Add(navWrap);
+            navStack.Children.Add(navWrap2);
+            navStack.Children.Add(navWrap3);
+
+            //column/row for navStack
+            Grid.SetColumn(navStack, 0);
+            Grid.SetRow(navStack, 0);
+
+            navGrid.Children.Add(navStack);
+
+
+            return navGrid;
+            //End of row and buttons used for navigation bar
         }
 
         /// <summary>
@@ -739,16 +777,68 @@ namespace minesweeper
 
             //Define the number of rows in the window (2) 
             RowDefinition row1 = new RowDefinition();
-            row1.Height = new GridLength(50);
+            row1.Height = new GridLength(75);
             creditGrid.RowDefinitions.Add(row1);
 
             RowDefinition row2 = new RowDefinition();
-            row2.Height = new GridLength(this.Height - 150);
+            row2.Height = new GridLength(this.Height - 200);
             creditGrid.RowDefinitions.Add(row2);
+
+            RowDefinition row3 = new RowDefinition();
+            row3.Height = new GridLength(this.Height - 150);
+            creditGrid.RowDefinitions.Add(row3);
 
             //label for information on creators, will add more as bios are created
             Label lblCreator = new Label();
-            lblCreator.Content = "Heres a little more about the creators of this game";
+            lblCreator.Content = "This game was made by:" + "\n" + "C Nasic Muhumed, Julie Johannes-Frohliger, Joseph Hansen, Dominic Burke";
+            lblCreator.Margin = new Thickness(25, 0, 0, 0);
+            lblCreator.FontSize = 18;
+
+            TextBlock txtCredits = new TextBlock();
+            txtCredits.Text = "These individuals are also the creators of the hit song 'A Thailand State of Mind'" + "\n" + "Lyrics are as follows:" + "\n" +
+                "Yeah, yeah" + "\n" +
+                "Ayo, everyone, it's time." + "\n" +
+                "It's time, everyone (aight, everyone, begin)." + "\n" +
+                "Straight out the broken dungeons of rap." + "\n" +
+                "\n" +
+                "The alpaca drops deep as does my cheese." + "\n" +
+                "I never type, 'cause to type is the mother of seize." + "\n" +
+                "Beyond the walls of shoes, life is defined." + "\n" +
+                "I think of food when I'm in a Thailand state of mind." + "\n" +
+                "\n" +
+                "Hope the disease got some freeze." + "\n" +
+                "My seize don't like no dirty expertise." + "\n" +
+                "Run up to the tease and get the ease." + "\n" +
+                "\n" +
+                "In a Thailand state of mind." + "\n" +
+                "\n" +
+                "What more could you ask for? The old alpaca ?" + "\n" +
+                "You complain about homework." + "\n" +
+                "I gotta love it though - somebody still speaks for the aca."+ "\n" +
+                "\n" +
+                "I'm rappin' to the finger," + "\n" +
+                "And I'm gonna move your forefinger." + "\n" +
+                "\n" +
+                "Mundane, green, fast, like a needle" + "\n" +
+                "Boy, I tell you, I thought you were a daedal." + "\n" +
+                "\n" +
+                "I can't take the homework, can't take the knitting." + "\n" +
+                "I woulda tried to click I guess I got no splitting." + "\n" +
+                "\n" +
+                "I'm rappin' to the forefinger," + "\n" +
+                "And I'm gonna move your finger." + "\n" +
+                "\n" +
+                "Yea, yaz, in a Thailand state of mind." + "\n" +
+                "\n" +
+                "When I was young my mother had an aca." + "\n" +
+                "I waz kicked out without no malacca." + "\n" +
+                "I never thought I'd see that paca." + "\n" +
+                "Ain't a soul alive that could take my mother's dhaka." + "\n" +
+                "\n" +
+                "A dim monitor is quite the linger." + "\n" +
+                "\n" +
+                "Thinking of food.Yaz, thinking of food(food).";
+            txtCredits.Margin = new Thickness(25, 0, 0, 0);
 
             //return to game board
             Button btnReturn = new Button();
@@ -761,10 +851,13 @@ namespace minesweeper
             Grid.SetColumn(lblCreator, 0);
             Grid.SetRow(lblCreator, 0);
             Grid.SetColumn(btnReturn, 1);
-            Grid.SetRow(btnReturn, 1);
+            Grid.SetRow(btnReturn, 2);
+            Grid.SetColumn(txtCredits, 0);
+            Grid.SetRow(txtCredits, 1);
 
             creditGrid.Children.Add(lblCreator);
             creditGrid.Children.Add(btnReturn);
+            creditGrid.Children.Add(txtCredits);
             //adding the dynamic grid to the mainwindow
             Content = creditGrid;
 
@@ -791,7 +884,7 @@ namespace minesweeper
 
             //Define the number of rows in the window (2) 
             RowDefinition row1 = new RowDefinition();
-            row1.Height = new GridLength(50);
+            row1.Height = new GridLength(250);
             rulesGrid.RowDefinitions.Add(row1);
 
             RowDefinition row2 = new RowDefinition();
@@ -800,7 +893,10 @@ namespace minesweeper
 
             //label for information on game rules, will expand the information
             Label lblRules = new Label();
-            lblRules.Content = "Rules of Minesweeper";
+            lblRules.Content = "Rules of Minesweeper:" + "\n" + "Left Clicking: By left clicking a square on the game board it will reveal that squares value as well as any non bomb squares around it." + "\n" + "The numbers shown indicate how many bombs are around the given square." +
+                "\n \n" + "Right Clicking: Right clicking a square on the game board will place a flag. Flags are purely for memory, allowing the player to mark squares they believe " + "\n" + "to be bombs. At the end of the game players are scorred based on the number of correct and incorrect flags. "+ "\n" + "You may only place a limited number of flags." +
+                "\n \n" + "Clicking a bomb: If the player left clicks a bomb the game will end as it detonates." +
+                "\n \n" + "Ending Game: To end the game, click the smiley face above the game board. This will show you your total score, the lower the better!";
 
             //return to game board
             Button btnReturn = new Button();
