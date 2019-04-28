@@ -6,6 +6,33 @@
         xmlns:local="clr-namespace:minesweeper"
         mc:Ignorable="d"
         Title="Minesweeper" Height="AUTO" Width="Auto" ResizeMode="NoResize"  SizeToContent="WidthAndHeight" Icon="Icons/favicon.ico">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="MyButton2">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Background" Value="MediumAquamarine" />
+            <Setter Property="Foreground" Value="MediumBlue" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="MyContentPresenter" 
+                                          Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="Green"/>
+                    <Setter Property="Foreground" Value="DeepPink"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="787*"/>

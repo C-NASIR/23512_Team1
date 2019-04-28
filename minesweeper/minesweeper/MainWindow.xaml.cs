@@ -117,8 +117,11 @@ namespace minesweeper
                 for (int x = 0; x < numColumns; x++)
                 {
                     Button btn = new Button();
+                    Style style = new Style(typeof(Button));
+                    style.Setters.Add(new Setter(Button.BackgroundProperty, Brushes.Green));
+                    btn.Style = style;
                     btn.Name = "btn_" + y + "_" + x;
-                    btn.Background = System.Windows.Media.Brushes.LightGray;
+  //                  btn.Background = System.Windows.Media.Brushes.LightGray;
 
                     //Creating the event signature
                     btn.Click += new RoutedEventHandler(btn_click);
@@ -161,10 +164,12 @@ namespace minesweeper
                         if (b.Name == "btn_" + cellLocationY + "_" + cellLocationX)
                         {
                             b.Content = game.Game.Cells[cellLocationY, cellLocationX].CellDisplayValue;
-                            //b.IsEnabled = false;
-                            b.Click -= btn_click;
-                            b.Click += btn_unclick;
-                            b.Background = Brushes.Yellow;
+                            b.IsEnabled = false;
+                            //b.Click -= btn_click;
+                            //b.Click += btn_unclick;
+                            //b.MouseRightButtonDown -= btn_rightClick;
+                            //b.MouseRightButtonDown += btn_unclick;
+                            //b.Background = Brushes.Yellow;
                             break;
                         }
                     }
@@ -172,6 +177,7 @@ namespace minesweeper
             }
         }
 
+        // Empty click event to "disable" button without losing styles
         void btn_unclick(object sender, EventArgs e)
         {
             
