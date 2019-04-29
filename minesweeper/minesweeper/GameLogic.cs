@@ -279,7 +279,42 @@ namespace minesweeper
         /// <returns></returns>
         internal int CalculateScore(String time)
         {
-            return 0;
+            int score = 0;
+            int hours;
+            int min;
+            int sec;
+
+            //parses the time it took the player to play the game and 
+            //adjust the score accordingly
+            string[] timeScore = time.Split(':');
+            int.TryParse(timeScore[0], out hours);
+            score += hours * 3600;
+            int.TryParse(timeScore[1], out min);
+            score += min * 60;
+            int.TryParse(timeScore[2], out sec);
+            score += sec;
+
+            //determines where flags and mines are placed and if the player
+            //correctly flagged mines, missed mines, or flagged incorrect cells
+            //and adjusts the score accordingly
+            foreach (Cell c in Game.Cells)
+            {
+                if (c.Flagged && c.CellValue == 9)
+                {
+                    score -= 15;
+                }
+                else if (c.Flagged && c.CellValue != 9)
+
+                {
+                    score += 25;
+                }
+                else if (c.Flagged == false && c.CellValue == 9)
+                {
+                    score += 25;
+                }
+            }
+
+            return score;
         }
     }
 }

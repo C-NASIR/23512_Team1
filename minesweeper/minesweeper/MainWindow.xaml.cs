@@ -117,11 +117,7 @@ namespace minesweeper
                 for (int x = 0; x < numColumns; x++)
                 {
                     Button btn = new Button();
-                    Style style = new Style(typeof(Button));
-                    style.Setters.Add(new Setter(Button.BackgroundProperty, Brushes.Green));
-                    btn.Style = style;
                     btn.Name = "btn_" + y + "_" + x;
-  //                  btn.Background = System.Windows.Media.Brushes.LightGray;
 
                     //Creating the event signature
                     btn.Click += new RoutedEventHandler(btn_click);
@@ -152,7 +148,6 @@ namespace minesweeper
             {
                 foreach (string n in cells)
                 {
-
                     int cellLocationX;
                     int cellLocationY;
                     string[] btnName = n.Split('_');
@@ -164,12 +159,30 @@ namespace minesweeper
                         if (b.Name == "btn_" + cellLocationY + "_" + cellLocationX)
                         {
                             b.Content = game.Game.Cells[cellLocationY, cellLocationX].CellDisplayValue;
-                            b.IsEnabled = false;
-                            //b.Click -= btn_click;
-                            //b.Click += btn_unclick;
-                            //b.MouseRightButtonDown -= btn_rightClick;
-                            //b.MouseRightButtonDown += btn_unclick;
-                            //b.Background = Brushes.Yellow;
+
+                            if (game.Game.Cells[cellLocationY, cellLocationX].Flagged == true)
+                            {
+                                game.Game.Cells[cellLocationY, cellLocationX].Flagged = false;
+                                game.FlagCounter -= 1;
+                                foreach (Label l in controls.OfType<Label>())
+                                {
+                                    if (l.Name == "FlagCounter")
+                                    {
+                                        if (game.FlagCounter == 0)
+                                        {
+                                            l.Content = "   Flags: ";
+                                        }
+                                        else
+                                        {
+                                            l.Content = "   Flags: " + game.FlagCounter;
+                                        }
+
+                                        break;
+                                    }
+                                }
+                            }
+                            b.Background = Brushes.LightSlateGray;
+                            disableButton(b);
                             break;
                         }
                     }
@@ -180,7 +193,7 @@ namespace minesweeper
         // Empty click event to "disable" button without losing styles
         void btn_unclick(object sender, EventArgs e)
         {
-            
+            //Empty method to remove functionality from 'disabled' buttons
         }
 
         //This is the click event of the dynamic event handler
@@ -201,7 +214,7 @@ namespace minesweeper
             else
             {
                 s.Click += btn_click;
-                s.Background = System.Windows.Media.Brushes.LightGray;
+                s.Background = Brushes.LightGray;
             }
             foreach (Label l in controls.OfType<Label>())
             {
@@ -220,7 +233,6 @@ namespace minesweeper
                 }
             }
         }
-
 
         //Find all controls in the window
         public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
@@ -413,50 +425,50 @@ namespace minesweeper
 
             //Stackpanel for post game labels and buttons
             StackPanel endGameStack = new StackPanel();
-            endGameStack.Visibility = Visibility.Collapsed;
+            //endGameStack.Visibility = Visibility.Collapsed;
             endGameStack.Width = this.Width;
             endGameStack.Height = 400;
             endGameStack.Tag = "check";
 
             //btn for replay in post game
-            Button btnReplay = new Button();
-            btnReplay.Click += newGame_Click;
-            btnReplay.Height = 25;
-            btnReplay.Width = 50;
-            btnReplay.Content = "Replay";
+            //Button btnReplay = new Button();
+            //btnReplay.Click += newGame_Click;
+            //btnReplay.Height = 25;
+            //btnReplay.Width = 50;
+            //btnReplay.Content = "Replay";
 
             //btn for closing game in post game
-            Button btnClose = new Button();
-            btnClose.Click += closeGame_Click;
-            btnClose.Height = 25;
-            btnClose.Width = 50;
-            btnClose.Content = "Close";
+            //Button btnClose = new Button();
+            //btnClose.Click += closeGame_Click;
+            //btnClose.Height = 25;
+            //btnClose.Width = 50;
+            //btnClose.Content = "Close";
 
             //lbl for displaying final score in post game
             Label lblScore = new Label();
             lblScore.Name = "scoreLabel";
-            lblScore.Content = current_score;
             lblScore.Height = 30;
             lblScore.Width = this.Width;
             lblScore.HorizontalContentAlignment = HorizontalAlignment.Center;
+            lblScore.Visibility = Visibility.Hidden;
 
             //wrappanel for horizontaly aligning post game buttons
-            WrapPanel endGameWrap = new WrapPanel();
-            endGameWrap.HorizontalAlignment = HorizontalAlignment.Left;
-            endGameWrap.Height = 31;
-            endGameWrap.Width = 100;
-            endGameWrap.Margin = new Thickness((this.Width / 2) - btnReplay.Width, 0, 0, 0);
+            //WrapPanel endGameWrap = new WrapPanel();
+            //endGameWrap.HorizontalAlignment = HorizontalAlignment.Left;
+            //endGameWrap.Height = 31;
+            //endGameWrap.Width = 100;
+            //endGameWrap.Margin = new Thickness((this.Width / 2) - btnReplay.Width, 0, 0, 0);
 
             //add controls to stackpanel
             endGameStack.Children.Add(lblScore);
-            endGameWrap.Children.Add(btnReplay);
-            endGameWrap.Children.Add(btnClose);
-            endGameStack.Children.Add(endGameWrap);
+            //endGameWrap.Children.Add(btnReplay);
+            //endGameWrap.Children.Add(btnClose);
+            //endGameStack.Children.Add(endGameWrap);
 
             //set column and row for endGameStack
-            //Grid.SetColumn(endGameStack, 0);
-            //Grid.SetRow(endGameStack, 3);
-            //windowGrid.Children.Add(endGameStack);
+            Grid.SetColumn(endGameStack, 0);
+            Grid.SetRow(endGameStack, 3);
+            windowGrid.Children.Add(endGameStack);
 
             //Create the  statusStrip grid
             Grid statusStrip = StatusBar();
@@ -493,7 +505,6 @@ namespace minesweeper
             StartTime = DateTime.Now;
             clock.Start();
         }
-
 
         public Grid StatusBar()
         {
@@ -599,7 +610,6 @@ namespace minesweeper
             
             navGrid.RowDefinitions.Add(navRow);
 
-
             //screenshot button for navbar
             Button btnScreenshot = new Button();
             btnScreenshot.Click += screenCapture_Click;
@@ -686,7 +696,6 @@ namespace minesweeper
             Grid.SetRow(navStack, 0);
 
             navGrid.Children.Add(navStack);
-
 
             return navGrid;
             //End of row and buttons used for navigation bar
@@ -932,12 +941,7 @@ namespace minesweeper
         private void checkScore_Click(object sender, RoutedEventArgs e)
         {
             EndGame();
-            //calls to dynamically created grid elements not working
-            //object check = (e.Source as Button).Tag;
-            //endGameStack.Vistibility = Visibility.Visible;
-
         }
-
 
         /// <summary>
         /// Process the various elements when the game is over
@@ -947,6 +951,15 @@ namespace minesweeper
             RevealBoard();
             int score = game.CalculateScore(getTime().ToString("HH:mm:ss"));
 
+            foreach (Label l in controls.OfType<Label>())
+            {
+                if (l.Name == "scoreLabel")
+                {
+                    l.Content = "Your score is " + score + "!";
+                    l.Visibility = Visibility.Visible;
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -956,13 +969,36 @@ namespace minesweeper
         {
             foreach (Cell c in game.Game.Cells)
             {
-
                 foreach (Button b in controls.OfType<Button>())
                 {
+                    disableButton(b);
+
                     if (b.Name == "btn_" + c.YLocation + "_" + c.XLocation)
                     {
-                        b.Content = game.Game.Cells[c.YLocation, c.XLocation].CellDisplayValue;
-                        b.IsEnabled = false;
+                        if (game.Game.Cells[c.YLocation, c.XLocation].CellDisplayValue == "*" &&
+                            game.Game.Cells[c.YLocation, c.XLocation].Flagged == false)
+                        {
+                            var brush = new ImageBrush();
+                            brush.ImageSource = new BitmapImage(new Uri("../../Icons/bomb.png", UriKind.Relative));
+                            b.Background = brush;
+
+                            b.BorderBrush = Brushes.Red;
+                        }
+                        else if (game.Game.Cells[c.YLocation, c.XLocation].CellDisplayValue == "*" &&
+                                 game.Game.Cells[c.YLocation, c.XLocation].Flagged == true)
+                        {
+                            b.BorderBrush = Brushes.LimeGreen;
+                        } else if (game.Game.Cells[c.YLocation, c.XLocation].CellDisplayValue != "*" &&
+                                   game.Game.Cells[c.YLocation, c.XLocation].Flagged == true)
+                        {
+                            b.Content = game.Game.Cells[c.YLocation, c.XLocation].CellDisplayValue;
+                            b.Background = Brushes.LightGray;
+                            b.BorderBrush = Brushes.Red;
+                        }
+                        else
+                        {
+                            b.Content = game.Game.Cells[c.YLocation, c.XLocation].CellDisplayValue;
+                        }                     
                         break;
                     }
                 }
@@ -978,6 +1014,19 @@ namespace minesweeper
             {
                 game = new GameLogic(int.Parse(txtWidth.Text), int.Parse(txtHeight.Text), int.Parse(txtBombs.Text));
             }
+        }
+
+        /// <summary>
+        /// Changes the left and right click events of buttons that are going to be disabled
+        /// to an empty click event
+        /// </summary>
+        /// <param name="b"></param>
+        private void disableButton(Button b)
+        {
+            b.Click -= btn_click;
+            b.Click += btn_unclick;
+            b.MouseRightButtonDown -= btn_rightClick;
+            b.MouseRightButtonDown += btn_unclick;
         }
     }
 }
