@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using minesweeper;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace minesweeper
 {
@@ -91,7 +92,7 @@ namespace minesweeper
 
         // On Left-click, parses button name, read cell value in array at specified location
         // calls spread function as necessary and returns a string of cell locations to affect on the UI
-        public List<string> ButtonLeftClicked(string btnName)
+        public List<string> ButtonLeftClicked(string btnName, ref DispatcherTimer clock)
         {
 
             List<string> stringCells = new List<string>();
@@ -112,6 +113,7 @@ namespace minesweeper
             }
             else if (chosenCell.CellValue == 9)
             {
+                clock.Stop();
                 //game over
                 stringCells.Add(chosenCell.YLocation + "_" + chosenCell.XLocation.ToString());
 

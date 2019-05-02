@@ -138,7 +138,7 @@ namespace minesweeper
         {
             Button s = sender as Button;
 
-            List<string> cells = game.ButtonLeftClicked(s.Name);
+            List<string> cells = game.ButtonLeftClicked(s.Name, ref clock);
 
             if (game.GameEnd == true)
             {
@@ -940,6 +940,7 @@ namespace minesweeper
         /// </summary>
         private void checkScore_Click(object sender, RoutedEventArgs e)
         {
+            clock.Stop();
             EndGame();
         }
 
@@ -948,6 +949,7 @@ namespace minesweeper
         /// </summary>
         private void EndGame()
         {
+            clock.Stop();
             RevealBoard();
             int score = game.CalculateScore(getTime().ToString("HH:mm:ss"));
 
