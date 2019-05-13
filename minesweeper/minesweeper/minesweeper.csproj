@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\bomb.png" />
+    <Resource Include="Icons\Smileyface.PNG" />
     <Content Include="sounds\boom.wav" />
     <Content Include="sounds\victory.wav" />
   </ItemGroup>

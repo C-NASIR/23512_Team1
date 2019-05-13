@@ -556,12 +556,12 @@ namespace minesweeper
             statusGrid.Children.Add(flagLabel);
 
             //btn for displaying post game menu
-            Button btnCheckScore = new Button();
-            btnCheckScore.Height = 25;
-            btnCheckScore.Width = 75;
-            btnCheckScore.Content = "Smileface";
-            btnCheckScore.Click += checkScore_Click;
-
+            System.Windows.Controls.Image btnCheckScore = new System.Windows.Controls.Image();
+            btnCheckScore.Height = 40;
+            btnCheckScore.Width = 40;
+            btnCheckScore.MouseDown += checkScore_Click;
+            btnCheckScore.Source = new BitmapImage(new Uri("../../Icons/Smileyface.png", UriKind.Relative));
+            
             //insert the happiest of faces
 
             Grid.SetColumn(btnCheckScore, 1);

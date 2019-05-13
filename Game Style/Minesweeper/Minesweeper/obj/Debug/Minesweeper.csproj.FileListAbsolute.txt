@@ -64,3 +64,6 @@ C:\Users\24146897.NWTC\Source\Repos\23512_Team14\Game Style\Minesweeper\Mineswee
 H:\Team Dev\23512_Team1\Game Style\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe.config
 H:\Team Dev\23512_Team1\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper.exe
 H:\Team Dev\23512_Team1\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper.pdb
+C:\Users\Hank Hill\Source\Repos\23512_Team15\Game Style\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe.config
+C:\Users\Hank Hill\Source\Repos\23512_Team15\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper.exe
+C:\Users\Hank Hill\Source\Repos\23512_Team15\Game Style\Minesweeper\Minesweeper\obj\Debug\Minesweeper.pdb
